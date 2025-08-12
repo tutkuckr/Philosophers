@@ -37,3 +37,7 @@ pthread_mutex_unlock
 */
 
 The routine is simple: pick up both forks (think if one of them is not available)→ eat → put down forks → sleep → repeat. Trouble begins when those steps overlap in time. If every philosopher grabs the left fork first, all forks are occupied and no one can collect a second — deadlock. If one glutton keeps winning the race for forks, a neighbour may wait forever — starvation.
+
+
+sources:
+https://www.geeksforgeeks.org/linux-unix/mutex-lock-for-linux-thread-synchronization/

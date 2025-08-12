@@ -6,7 +6,7 @@
 #    By: tutku <tutku@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/06 15:42:05 by tutku             #+#    #+#              #
-#    Updated: 2025/08/10 16:24:05 by tutku            ###   ########.fr        #
+#    Updated: 2025/08/11 15:11:11 by tutku            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ OBJ_DIR = obj
 
 # Source file
 SRC =	philo.c\
+		check_error.c\
 		init.c\
 		utils.c\
 		test.c

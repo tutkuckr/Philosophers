@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:02:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/10 20:37:00 by tutku            ###   ########.fr       */
+/*   Updated: 2025/08/11 14:26:53 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,6 @@ void	error_msg(t_error_type error_no)
 		printf("Malloc error\n");
 	else if (error_no == ERR_THREAD)
 		printf("Failed to create thread\n");
+	else if (error_no == ERR_MUTEX)
+		printf("Error on mutex\n");
 }

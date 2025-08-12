@@ -6,53 +6,26 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/10 16:24:33 by tutku            ###   ########.fr       */
+/*   Updated: 2025/08/11 18:09:00 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// check if input can be 0
-// checks if input is numeric & between 1 & max_int
-static t_error_type check_input(char *argv, int argc, int curr_arg)
+t_error_type	init_philo(t_data *data, t_philo **philo)
 {
-	int j;
-	long val;
+	int	i;
 
-	j = 0;
-	while (argv[j])
+	*philo = malloc(sizeof(t_philo) * data->num_of_philo);
+	if (!*philo)
+		return (ERR_MALLOC);
+	i = 0;
+	while (i < data->num_of_philo)
 	{
-		if (!(argv[j] >= '0' && argv[j] <= '9'))
-			return (ERR_INV_INPUT);
-		j++;
-	}
-	val = ft_atol(argv);
-	if (argc == 6 && curr_arg == 5)
-	{
-		if (val < 0 || val > MAX_INT)
-			return (ERR_INV_RANGE);
-	}
-	else
-	{
-		if (val < 1 || val > MAX_INT)
-			return (ERR_INV_RANGE);
-	}
-	return (SUCCESS);
-}
-
-static t_error_type	check_error(int argc, char *argv[])
-{
-	t_error_type	status;
-	int				i;
-
-	if (!(argc == 5 || argc == 6))
-		return (ERR_INV_ARGC);
-	i = 1;
-	while (i < argc)
-	{
-		status = check_input(argv[i], argc, i);
-		if (status != SUCCESS)
-			return (status);
+		(*philo)[i].data = data;
+		(*philo)[i].philo_id = i;
+		(*philo)[i].left_fork = i;
+		(*philo)[i].right_fork = (i + 1) % data->num_of_philo;
 		i++;
 	}
 	return (SUCCESS);

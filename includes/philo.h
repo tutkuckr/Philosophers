@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/10 21:55:18 by tutku            ###   ########.fr       */
+/*   Updated: 2025/08/11 18:09:05 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,22 @@ typedef enum e_error_type
 	ERR_INV_RANGE,
 	ERR_PHILO_AMOUNT,
 	ERR_MALLOC,
-	ERR_THREAD
+	ERR_THREAD,
+	ERR_MUTEX,
+	ERR_INIT_PHILOS
 } t_error_type;
 
-//init.c
+//check_error.c
+t_error_type	check_error(int argc, char *argv[]);
+
+// init.c
 t_error_type	check_error_and_init(int argc, char *argv[], t_data *data);
+t_error_type	init_philo(t_data *data, t_philo **philo);
 
 // utils.c
 long			ft_atol(const char *nptr);
 void			error_msg(t_error_type error_no);
 
 //test.c
-void			print_philos(t_data data);
+void			print_philos(t_philo philo);
 #endif
