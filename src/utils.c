@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:02:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/11 14:26:53 by tutku            ###   ########.fr       */
+/*   Updated: 2025/08/19 14:17:32 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ long	ft_atol(const char *nptr)
 }
 
 // later define messages with const str, and use one printf
-void	error_msg(t_error_type error_no)
+t_error_type	error_msg(t_error_type error_no)
 {
 	if (error_no == ERR_INV_ARGC)
-		printf("Invalid argc (expected 5 or 6)!\n"); //change into putstr -> pass with fd=2
+		printf("Invalid argc (expected 5 or 6)!\n");
 	else if (error_no == ERR_INV_INPUT)
 		printf("Invalid argv: must be numeric\n");
 	else if (error_no == ERR_INV_RANGE)
@@ -54,4 +54,5 @@ void	error_msg(t_error_type error_no)
 		printf("Failed to create thread\n");
 	else if (error_no == ERR_MUTEX)
 		printf("Error on mutex\n");
+	return (error_no);
 }
