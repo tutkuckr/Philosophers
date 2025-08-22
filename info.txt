@@ -41,3 +41,5 @@ The routine is simple: pick up both forks (think if one of them is not available
 
 sources:
 https://www.geeksforgeeks.org/linux-unix/mutex-lock-for-linux-thread-synchronization/
+
+valgrind --tool=helgrind -> for philosophers

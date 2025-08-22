@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:39:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/19 14:48:52 by tutku            ###   ########.fr       */
+/*   Updated: 2025/08/22 17:22:27 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,16 @@ Odd ID: take left then right
 */
 void	*routine(void *arg)
 {
-	t_philo	*philo;
+	t_philo			*philo;
+	
+
+	//if (pthread_mutex_init(&philo->start, NULL) != 0)
+	//{
+	//	return (error_msg(ERR_MUTEX)); //has to return void *
+	//}
 
 	philo = (t_philo *)arg;
-	return ;
+	return (NULL);
 }
 
 t_error_type	init_philos(t_data *data, t_philo *philo)

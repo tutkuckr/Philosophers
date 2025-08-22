@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 01:55:40 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/19 14:16:46 by tutku            ###   ########.fr       */
+/*   Updated: 2025/08/22 17:26:17 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_error_type	check_error(int argc, char *argv[])
 	int				i;
 
 	if (!(argc == 5 || argc == 6))
-		return (ERR_INV_ARGC);
+		return (error_msg(ERR_INV_ARGC));
 	i = 1;
 	while (i < argc)
 	{

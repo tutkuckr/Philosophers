@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/19 14:18:44 by tutku            ###   ########.fr       */
+/*   Updated: 2025/08/22 17:21:10 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,17 @@ typedef struct s_data
 
 typedef struct s_philo
 {
-	t_data		*data;
-	pthread_t	thread;
-	int			id;
-	int			left_fork; // index = id
-	int			right_fork; // index = (id + 1) % N
+	t_data			*data;
+	pthread_t		thread;
+	pthread_mutex_t	start;
+	int				id;
+	int				left_fork; // index = id
+	int				right_fork; // index = (id + 1) % N
 }	t_philo;
 
 typedef enum e_error_type
 {
-	SUCCESS,
+	SUCCESS = -2,
 	ERROR,
 	ERR_INV_ARGC,
 	ERR_INV_INPUT,
@@ -63,6 +64,7 @@ t_error_type	init_philo(t_data *data, t_philo **philo);
 t_error_type	init_data(t_data *data, int argc, char *argv[]);
 
 // utils.c
+void			ft_putstr_fd(char *s, int fd);
 long			ft_atol(const char *nptr);
 t_error_type	error_msg(t_error_type error_no);
 

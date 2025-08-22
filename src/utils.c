@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:02:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/19 14:17:32 by tutku            ###   ########.fr       */
+/*   Updated: 2025/08/22 17:26:34 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+}
 
 long	ft_atol(const char *nptr)
 {
@@ -40,19 +52,31 @@ long	ft_atol(const char *nptr)
 // later define messages with const str, and use one printf
 t_error_type	error_msg(t_error_type error_no)
 {
-	if (error_no == ERR_INV_ARGC)
-		printf("Invalid argc (expected 5 or 6)!\n");
-	else if (error_no == ERR_INV_INPUT)
-		printf("Invalid argv: must be numeric\n");
-	else if (error_no == ERR_INV_RANGE)
-		printf("Invalid range of input\n");
-	else if (error_no == ERR_PHILO_AMOUNT)
-		printf("Invalid philo amount\n");
-	else if (error_no == ERR_MALLOC)
-		printf("Malloc error\n");
-	else if (error_no == ERR_THREAD)
-		printf("Failed to create thread\n");
-	else if (error_no == ERR_MUTEX)
-		printf("Error on mutex\n");
+	const char	*e_msg[] = {
+		"Invalid argc (expected 5 or 6)!\n",
+		"Invalid argv: must be numeric\n",
+		"Invalid range of input\n",
+		"Invalid philo amount\n",
+		"Malloc error\n",
+		"Failed to create thread\n",
+		"Error on mutex\n",
+		"Error initalizing philosophers\n"
+	};
+
+	ft_putstr_fd((char *)e_msg[error_no], 2);
+	//if (error_no == ERR_INV_ARGC)
+	//	ft_putstr_fd("Invalid argc (expected 5 or 6)!\n", 2);
+	//else if (error_no == ERR_INV_INPUT)
+	//	ft_putstr_fd("Invalid argv: must be numeric\n", 2);
+	//else if (error_no == ERR_INV_RANGE)
+	//	ft_putstr_fd("Invalid range of input\n", 2);
+	//else if (error_no == ERR_PHILO_AMOUNT)
+	//	ft_putstr_fd("Invalid philo amount\n");
+	//else if (error_no == ERR_MALLOC)
+	//	ft_putstr_fd("Malloc error\n");
+	//else if (error_no == ERR_THREAD)
+	//	ft_putstr_fd("Failed to create thread\n");
+	//else if (error_no == ERR_MUTEX)
+	//	ft_putstr_fd("Error on mutex\n");
 	return (error_no);
 }
