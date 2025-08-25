@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/25 20:22:04 by tutku            ###   ########.fr       */
+/*   Updated: 2025/08/25 23:16:12 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,5 @@ long			ft_atol(const char *nptr);
 t_error_type	error_msg(t_error_type error_no);
 
 //test.c
-void			print_philos(t_philo philo);
+void			print_data(t_data data);
 #endif

@@ -6,12 +6,12 @@
 #    By: tutku <tutku@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/06 15:42:05 by tutku             #+#    #+#              #
-#    Updated: 2025/08/25 20:21:10 by tutku            ###   ########.fr        #
+#    Updated: 2025/08/25 23:13:34 by tutku            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I$(INC_DIR)
+CFLAGS = -Wall -Werror -Wextra -I$(INC_DIR) -fsanitize=address -g
 
 # Directories
 INC_DIR = includes

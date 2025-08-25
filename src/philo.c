@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:39:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/25 20:42:17 by tutku            ###   ########.fr       */
+/*   Updated: 2025/08/26 00:05:24 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	*routine(void *arg)
 	//}
 
 	philo = (t_philo *)arg;
+	if (!philo) //to silence compile error
+		return (NULL);
 	return (NULL);
 }
 
@@ -51,7 +53,7 @@ t_error_type	init_philos(t_data *data, t_philo *philo)
 		printf("Thread %d has finished execution\n", i);
 		i++;
 	}
-	printf("Both threads end.");
+	printf("Both threads end.\n");
 	return (SUCCESS);
 }
 
@@ -86,6 +88,6 @@ int	main(int argc, char *argv[])
 	|| init_mutexes(&data) != SUCCESS
 	|| init_philos(&data, &philo) != SUCCESS)
 		return (1);
-	print_philos(philo);
+	print_data(data);
 	return (0);
 }
