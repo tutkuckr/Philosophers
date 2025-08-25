@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:39:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/22 17:22:27 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/08/25 20:42:17 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_error_type	init_philos(t_data *data, t_philo *philo)
 	while (i < data->num_of_philo)
 	{
 		if (pthread_create(&philo[i].thread, NULL, routine, &philo[i]) != 0)
-			return (error_msg(ERR_THREAD));
+			return (free(philo), error_msg(ERR_THREAD));
 		printf("Thread %d has started\n", i);
 		i++;
 	}
@@ -67,7 +67,7 @@ t_error_type	init_mutexes(t_data *data)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
 		{
-			// free mutexes, destroy them in a while loop
+			destroy_mutex(data, (i - 1));
 			return (error_msg(ERR_MUTEX));
 		}
 		i++;

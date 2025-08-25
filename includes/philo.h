@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/22 17:21:10 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/08/25 20:22:04 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ typedef enum e_error_type
 
 //check_error.c
 t_error_type	check_error(int argc, char *argv[]);
+
+//free.c
+void			destroy_mutex(t_data *data, int i);
 
 // init.c
 t_error_type	init_philo(t_data *data, t_philo **philo);
