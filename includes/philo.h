@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/25 23:16:12 by tutku            ###   ########.fr       */
+/*   Updated: 2025/08/27 14:38:46 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				max_eat;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	*controller;
 }	t_data;
 
 typedef struct s_philo
@@ -61,10 +62,12 @@ t_error_type	check_error(int argc, char *argv[]);
 
 //free.c
 void			destroy_mutex(t_data *data, int i);
+void			free_data(t_data *data, t_philo *philo);
 
 // init.c
 t_error_type	init_philo(t_data *data, t_philo **philo);
 t_error_type	init_data(t_data *data, int argc, char *argv[]);
+t_error_type	init_mutexes(t_data *data);
 
 // utils.c
 void			ft_putstr_fd(char *s, int fd);

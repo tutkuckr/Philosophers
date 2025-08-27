@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/22 17:11:37 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/08/27 14:43:22 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,30 @@ t_error_type	init_data(t_data *data, int argc, char *argv[])
 		data->max_eat = ft_atol(argv[5]);
 	else
 		data->max_eat = -1;
+	return (SUCCESS);
+}
+
+t_error_type	init_mutexes(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_of_philo);
+	if (!data->forks)
+		return (error_msg(ERR_MALLOC));
+	data->controller = malloc(sizeof(pthread_mutex_t));
+	 if (!data->controller)
+		return (free(data->forks), error_msg(ERR_MALLOC));
+	if (pthread_mutex_init(data->controller, NULL) != 0)
+	{
+
+		return (destroy_mutex(data, i), free(data->controller), data->controller = NULL, error_msg(ERR_MUTEX));
+	}
+	while (i < data->num_of_philo)
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
+			return (destroy_mutex(data, i), error_msg(ERR_MUTEX));
+		i++;
+	}
 	return (SUCCESS);
 }
