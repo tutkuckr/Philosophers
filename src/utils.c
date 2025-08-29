@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:02:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/27 14:20:42 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:27:14 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,5 @@ t_error_type	error_msg(t_error_type error_no)
 	};
 
 	ft_putstr_fd((char *)e_msg[error_no], 2);
-	//if (error_no == ERR_INV_ARGC)
-	//	ft_putstr_fd("Invalid argc (expected 5 or 6)!\n", 2);
-	//else if (error_no == ERR_INV_INPUT)
-	//	ft_putstr_fd("Invalid argv: must be numeric\n", 2);
-	//else if (error_no == ERR_INV_RANGE)
-	//	ft_putstr_fd("Invalid range of input\n", 2);
-	//else if (error_no == ERR_PHILO_AMOUNT)
-	//	ft_putstr_fd("Invalid philo amount\n");
-	//else if (error_no == ERR_MALLOC)
-	//	ft_putstr_fd("Malloc error\n");
-	//else if (error_no == ERR_THREAD)
-	//	ft_putstr_fd("Failed to create thread\n");
-	//else if (error_no == ERR_MUTEX)
-	//	ft_putstr_fd("Error on mutex\n");
 	return (error_no);
 }

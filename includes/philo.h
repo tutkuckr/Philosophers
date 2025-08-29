@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/27 14:38:46 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/08/29 16:55:14 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_eat;
+	int				t_started; //thread checker
+	int				c_inited; //controller checker
+	int				f_started; //fork mutex checker
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	*controller;
+	pthread_mutex_t	controller;
 }	t_data;
 
 typedef struct s_philo
@@ -61,13 +64,16 @@ typedef enum e_error_type
 t_error_type	check_error(int argc, char *argv[]);
 
 //free.c
-void			destroy_mutex(t_data *data, int i);
 void			free_data(t_data *data, t_philo *philo);
 
 // init.c
 t_error_type	init_philo(t_data *data, t_philo **philo);
+t_error_type	start_threads(t_data *data, t_philo *philo);
 t_error_type	init_data(t_data *data, int argc, char *argv[]);
 t_error_type	init_mutexes(t_data *data);
+
+//routine.c
+void			*routine(void *arg);
 
 // utils.c
 void			ft_putstr_fd(char *s, int fd);
