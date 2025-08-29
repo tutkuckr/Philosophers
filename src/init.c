@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/29 16:54:33 by tutku            ###   ########.fr       */
+/*   Updated: 2025/08/29 20:24:59 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ t_error_type	init_data(t_data *data, int argc, char *argv[])
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
+	data->start_time = get_cur_time();
 	if (data->num_of_philo <= 0 || data->num_of_philo > 200)
 		return (error_msg(ERR_PHILO_AMOUNT));
 	if (argc == 6)

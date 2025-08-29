@@ -6,22 +6,43 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:02:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/29 15:27:14 by tutku            ###   ########.fr       */
+/*   Updated: 2025/08/29 20:32:16 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_putstr_fd(char *s, int fd)
+long long int	get_cur_time(void)
 {
-	size_t	i;
+	struct timeval tv;
+	long long int current_time;
 
-	i = 0;
-	while (s[i] != '\0')
+	if (gettimeofday(&tv, NULL) == -1)
 	{
-		write(fd, &s[i], 1);
-		i++;
+		printf("gettimeofday error\n"); //TODO print on std err
+		exit(1);//TODO check leak
 	}
+	current_time = (tv.tv_sec * 1000LL) + (tv.tv_usec / 1000LL);
+	return (current_time);
+}
+
+void skip_time(int time_input)
+{
+	long long int	wait_time;
+
+	wait_time = get_cur_time() + time_input;
+	while (get_cur_time() < wait_time)
+		usleep(100);
+}
+
+void controller_print(t_philo *philo, char *message)
+{
+	long long int cur_time;
+
+	pthread_mutex_lock(&philo->data->controller);
+	cur_time = get_cur_time();
+	printf("%lld %d %s\n", cur_time - philo->data->start_time, (philo->id + 1), message);
+	pthread_mutex_unlock(&philo->data->controller);
 }
 
 long	ft_atol(const char *nptr)
@@ -62,7 +83,17 @@ t_error_type	error_msg(t_error_type error_no)
 		"Error on mutex\n",
 		"Error initalizing philosophers\n"
 	};
+	size_t		i;
+	int			len;
 
-	ft_putstr_fd((char *)e_msg[error_no], 2);
+	i = 0;
+	len = 0;
+	while (e_msg[error_no][len] != '\0')
+		len++;
+	while (e_msg[error_no][i] != '\0')
+	{
+		write(2, &e_msg[error_no][i], len);
+		i++;
+	}
 	return (error_no);
 }

@@ -43,3 +43,29 @@ sources:
 https://www.geeksforgeeks.org/linux-unix/mutex-lock-for-linux-thread-synchronization/
 
 valgrind --tool=helgrind -> for philosophers
+
+About the logs of your program:
+• Any state change of a philosopher must be formatted as follows:
+◦ timestamp_in_ms X has taken a fork
+◦ timestamp_in_ms X is eating
+◦ timestamp_in_ms X is sleeping
+◦ timestamp_in_ms X is thinking
+◦ timestamp_in_ms X died
+Replace timestamp_in_ms with the current timestamp in milliseconds
+and X with the philosopher number.
+• A displayed state message should not overlap with another message.
+• A message announcing a philosopher’s death must be displayed within 10 ms of
+their actual death.
+• Again, philosophers should avoid dying!
+
+
+gettimeofday function needs:
+return val:
+0 -> success
+-1 -> error
+struct timeval *tv;
+
+struct timeval {
+	time_t      tv_sec;     /* seconds */
+	suseconds_t tv_usec;    /* microseconds */
+};

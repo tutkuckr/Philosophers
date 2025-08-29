@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/29 16:55:14 by tutku            ###   ########.fr       */
+/*   Updated: 2025/08/29 20:24:41 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_data
 	int				t_started; //thread checker
 	int				c_inited; //controller checker
 	int				f_started; //fork mutex checker
+	long long int	start_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	controller;
 }	t_data;
@@ -44,7 +45,9 @@ typedef struct s_philo
 	int				id;
 	int				left_fork; // index = id
 	int				right_fork; // index = (id + 1) % N
-}	t_philo;
+	long			before_die;//TODO check types
+	long			before_eat;//TODO check types
+} t_philo;
 
 typedef enum e_error_type
 {
@@ -76,7 +79,9 @@ t_error_type	init_mutexes(t_data *data);
 void			*routine(void *arg);
 
 // utils.c
-void			ft_putstr_fd(char *s, int fd);
+long long int			get_cur_time(void);
+void			skip_time(int time_input);
+void			controller_print(t_philo *philo, char *message);
 long			ft_atol(const char *nptr);
 t_error_type	error_msg(t_error_type error_no);
 
