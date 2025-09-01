@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/29 20:24:41 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/01 15:57:53 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,28 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_eat;
-	int				t_started; //thread checker
-	int				c_inited; //controller checker
-	int				f_started; //fork mutex checker
 	long long int	start_time;
+	int				c_thread; //thread checker
+	int				stopper;
+	int				c_stop; // stop checker
+	pthread_mutex_t	m_stop; // protect stopper
+	int				c_fork; //fork mutex checker
 	pthread_mutex_t	*forks;
+	int				c_controller; //controller checker
 	pthread_mutex_t	controller;
-}	t_data;
+} t_data;
 
 typedef struct s_philo
 {
 	t_data			*data;
 	pthread_t		thread;
 	pthread_mutex_t	start;
+	pthread_mutex_t m_meal; // protect last_meal_time, total_meals_eaten
 	int				id;
-	int				left_fork; // index = id
-	int				right_fork; // index = (id + 1) % N
-	long			before_die;//TODO check types
-	long			before_eat;//TODO check types
+	int				left_fork;	// index = id
+	int				right_fork;	// index = (id + 1) % N
+	int				total_meals_eaten;
+	long long int	last_meal_time;
 } t_philo;
 
 typedef enum e_error_type
@@ -75,8 +79,12 @@ t_error_type	start_threads(t_data *data, t_philo *philo);
 t_error_type	init_data(t_data *data, int argc, char *argv[]);
 t_error_type	init_mutexes(t_data *data);
 
-//routine.c
-void			*routine(void *arg);
+// routine_utils.c
+void			set_stopper_val(t_data *data, int val);
+int				get_stopper_val(t_data *data);
+
+// routine.c
+void *routine(void *arg);
 
 // utils.c
 long long int			get_cur_time(void);

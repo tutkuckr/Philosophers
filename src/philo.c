@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:39:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/29 16:53:20 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/01 14:01:31 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (init_all(argc, argv, &data, &philo) != SUCCESS)
 		return (free_data(&data, philo), 1);
-	print_data(data); //test
+	// print_data(data); //test
 	free_data(&data, philo);
 	return (0);
 }

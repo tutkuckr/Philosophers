@@ -69,3 +69,24 @@ struct timeval {
 	time_t      tv_sec;     /* seconds */
 	suseconds_t tv_usec;    /* microseconds */
 };
+
+
+
+dedicated mutex that only guards last_meal and meals_eaten: philo->m_meal;
+routine function updates:
+- last_meal_time (just before/when it starts eating),
+- meals_eaten (right after eating).
+
+The monitor thread reads those fields at arbitrary times to check:
+- death: now - last_meal >= time_to_die
+- completion: meals_eaten >= max_eat (if used)
+
+
+WHOLE STRUCTURE:
+Fork mutexes → protect the physical forks (resource sharing).
+
+Meal mutex (per philo) → protect the philo’s state (last_meal, meals_eaten) from concurrent read/write.
+
+Print mutex → serialize printf lines.
+
+Stop/death mutex → protect the global stop/over flag.

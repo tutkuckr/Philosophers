@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:02:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/29 20:32:16 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/01 14:14:08 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_error_type	error_msg(t_error_type error_no)
 		len++;
 	while (e_msg[error_no][i] != '\0')
 	{
-		write(2, &e_msg[error_no][i], len);
+		write(2, &e_msg[error_no][i], 1);
 		i++;
 	}
 	return (error_no);

@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/29 20:24:59 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/01 17:27:52 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,20 @@ t_error_type	start_threads(t_data *data, t_philo *philo)
 	int	i;
 	int j;
 
-	data->t_started = 0;
+	data->c_thread = 0;
 	i = 0;
 	while (i < data->num_of_philo)
 	{
 		if (pthread_create((&philo[i].thread), NULL, routine, (&philo[i])) != 0)
 		{
 			j = -1;
-			while (++j < data->t_started)
+			while (++j < data->c_thread)
 				pthread_join(philo[i].thread, NULL);
-			data->t_started = 0;
+			data->c_thread = 0;
 			return (error_msg(ERR_THREAD));
 		}
-		printf("thread %d is created\n", i + 1); // test
 		i++;
-		data->t_started++;
+		data->c_thread++;
 	}
 	return (SUCCESS);
 }
@@ -39,18 +38,26 @@ t_error_type	start_threads(t_data *data, t_philo *philo)
 t_error_type	init_philo(t_data *data, t_philo **philo)
 {
 	int	i;
+	int	j;
 
 	*philo = malloc(sizeof(t_philo) * data->num_of_philo);
 	if (!*philo)
 		return (error_msg(ERR_MALLOC));
-	i = 0;
-	while (i < data->num_of_philo)
+	i = -1;
+	while (++i < data->num_of_philo)
 	{
 		(*philo)[i].data = data;
 		(*philo)[i].id = i;
 		(*philo)[i].left_fork = i;
 		(*philo)[i].right_fork = (i + 1) % data->num_of_philo;
-		i++;
+		// init mutex philo m_meal
+		if(pthread_mutex_init(&(*philo)[i].m_meal, NULL) != 0)
+		{
+			j = -1;
+			while (++j < i)
+				pthread_mutex_destroy(&(*philo)[j].m_meal);
+			return (error_msg(ERR_MUTEX));
+		}
 	}
 	return (SUCCESS);
 }
@@ -59,16 +66,20 @@ t_error_type	init_mutexes(t_data *data)
 {
 	if (pthread_mutex_init(&data->controller, NULL) != 0)
 		return (error_msg(ERR_MUTEX));
-	data->c_inited = 1;
+	data->c_controller = 1;
+	if (pthread_mutex_init(&data->m_stop, NULL) != 0)
+		return error_msg(ERR_MUTEX);
+	data->c_stop = 1;
+	data->stopper = 0;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_of_philo);
 	if (!data->forks)
 		return (error_msg(ERR_MALLOC));
-	data->f_started = 0;
-	while (data->f_started < data->num_of_philo)
+	data->c_fork = 0;
+	while (data->c_fork < data->num_of_philo)
 	{
-		if (pthread_mutex_init(&data->forks[data->f_started], NULL) != 0)
+		if (pthread_mutex_init(&data->forks[data->c_fork], NULL) != 0)
 			return (error_msg(ERR_MUTEX));
-		data->f_started++;
+		data->c_fork++;
 	}
 	return (SUCCESS);
 }

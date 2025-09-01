@@ -6,7 +6,7 @@
 #    By: tutku <tutku@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/06 15:42:05 by tutku             #+#    #+#              #
-#    Updated: 2025/08/29 13:59:20 by tutku            ###   ########.fr        #
+#    Updated: 2025/09/01 15:08:45 by tutku            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC =	philo.c\
 		check_error.c\
 		free.c\
 		init.c\
+		routine_utils.c\
 		routine.c\
 		utils.c\
 		test.c
