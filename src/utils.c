@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:02:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/01 14:14:08 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/02 15:31:22 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ long long int	get_cur_time(void)
 
 	if (gettimeofday(&tv, NULL) == -1)
 	{
-		printf("gettimeofday error\n"); //TODO print on std err
-		exit(1);//TODO check leak
+		write(2, "gettimeofday error\n", 20);
+		exit(1); // TODO check leak
 	}
 	current_time = (tv.tv_sec * 1000LL) + (tv.tv_usec / 1000LL);
 	return (current_time);

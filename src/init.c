@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/01 17:27:52 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/02 16:54:32 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_error_type	start_threads(t_data *data, t_philo *philo)
 		i++;
 		data->c_thread++;
 	}
+	data->ready = 1;
 	return (SUCCESS);
 }
 
@@ -50,7 +51,6 @@ t_error_type	init_philo(t_data *data, t_philo **philo)
 		(*philo)[i].id = i;
 		(*philo)[i].left_fork = i;
 		(*philo)[i].right_fork = (i + 1) % data->num_of_philo;
-		// init mutex philo m_meal
 		if(pthread_mutex_init(&(*philo)[i].m_meal, NULL) != 0)
 		{
 			j = -1;
@@ -64,11 +64,13 @@ t_error_type	init_philo(t_data *data, t_philo **philo)
 
 t_error_type	init_mutexes(t_data *data)
 {
+	int	j;
+
 	if (pthread_mutex_init(&data->controller, NULL) != 0)
 		return (error_msg(ERR_MUTEX));
 	data->c_controller = 1;
 	if (pthread_mutex_init(&data->m_stop, NULL) != 0)
-		return error_msg(ERR_MUTEX);
+		return (error_msg(ERR_MUTEX)); //free previous mutex?
 	data->c_stop = 1;
 	data->stopper = 0;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_of_philo);
@@ -78,7 +80,12 @@ t_error_type	init_mutexes(t_data *data)
 	while (data->c_fork < data->num_of_philo)
 	{
 		if (pthread_mutex_init(&data->forks[data->c_fork], NULL) != 0)
-			return (error_msg(ERR_MUTEX));
+		{
+			j = -1;
+			while (++j < data->c_fork)
+				pthread_mutex_destroy(&data->forks[j]);
+			return (error_msg(ERR_MUTEX)); // should i destroy other mutexes here?
+		}
 		data->c_fork++;
 	}
 	return (SUCCESS);
@@ -92,6 +99,7 @@ t_error_type	init_data(t_data *data, int argc, char *argv[])
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
 	data->start_time = get_cur_time();
+	// data->ready = 0;
 	if (data->num_of_philo <= 0 || data->num_of_philo > 200)
 		return (error_msg(ERR_PHILO_AMOUNT));
 	if (argc == 6)
