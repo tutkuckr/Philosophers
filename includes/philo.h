@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/02 16:53:46 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/03 14:21:12 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_eat;
-	long long int	start_time;
 	int				c_thread; //thread checker
 	int				stopper;
 	int				c_stop; // stop checker
-	pthread_mutex_t	m_stop; // protect stopper
 	int				c_fork; //fork mutex checker
-	pthread_mutex_t	*forks;
 	int				c_controller; //controller checker
+	long long int	start_time;
+	pthread_mutex_t	m_stop; // protect stopper
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	controller;
 	// int ready;
 } t_data;
@@ -45,7 +45,7 @@ typedef struct s_philo
 {
 	t_data			*data;
 	pthread_t		thread;
-	pthread_mutex_t	start;
+	//pthread_mutex_t	start;
 	pthread_mutex_t m_meal; // protect last_meal_time, meal_count
 	int				id;
 	int				left_fork;	// index = id
@@ -93,7 +93,7 @@ int				get_stopper_val(t_data *data);
 void *routine(void *arg);
 
 // utils.c
-long long int			get_cur_time(void);
+long long int	get_cur_time(void);
 void			skip_time(int time_input);
 void			controller_print(t_philo *philo, char *message);
 long			ft_atol(const char *nptr);
