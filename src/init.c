@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/03 14:14:28 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:39:33 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ t_error_type	start_threads(t_data *data, t_philo *philo)
 
 	data->c_thread = 0;
 	i = 0;
+	if (pthread_create((&philo->data->monitor), NULL, monitor, philo) != 0) //check, monitor thread
+	{
+		return (error_msg(ERR_THREAD));
+	}
 	while (i < data->num_of_philo)
 	{
 		if (pthread_create((&philo[i].thread), NULL, routine, (&philo[i])) != 0)

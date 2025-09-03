@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tutku <tutku@student.42.fr>                +#+  +:+       +#+         #
+#    By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/06 15:42:05 by tutku             #+#    #+#              #
-#    Updated: 2025/09/02 15:38:28 by tutku            ###   ########.fr        #
+#    Updated: 2025/09/03 14:40:05 by tcakir-y         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC =	philo.c\
 		check_error.c\
 		free.c\
 		init.c\
+		monitor.c\
 		routine_multi_philo.c\
 		routine_utils.c\
 		routine.c\

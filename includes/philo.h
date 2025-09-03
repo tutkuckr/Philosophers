@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/03 14:21:12 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/03 15:01:24 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,15 @@
 
 typedef struct s_data
 {
+	t_philo         *philos; //test
+	//pthread_t		monitor;
 	int				num_of_philo;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_eat;
-	int				c_thread; //thread checker
 	int				stopper;
+	int				c_thread; //thread checker
 	int				c_stop; // stop checker
 	int				c_fork; //fork mutex checker
 	int				c_controller; //controller checker
@@ -45,7 +47,6 @@ typedef struct s_philo
 {
 	t_data			*data;
 	pthread_t		thread;
-	//pthread_mutex_t	start;
 	pthread_mutex_t m_meal; // protect last_meal_time, meal_count
 	int				id;
 	int				left_fork;	// index = id
@@ -81,6 +82,9 @@ t_error_type	init_philo(t_data *data, t_philo **philo);
 t_error_type	start_threads(t_data *data, t_philo *philo);
 t_error_type	init_data(t_data *data, int argc, char *argv[]);
 t_error_type	init_mutexes(t_data *data);
+
+// monitor.c
+void			*monitor(void *arg);
 
 // routine_multi_philo.c
 void			handle_multi_philo(t_philo *philo);
