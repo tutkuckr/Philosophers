@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/03 15:01:24 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/05 16:05:17 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 typedef struct s_data
 {
-	t_philo         *philos; //test
+	// t_philo			*philos; //test
 	//pthread_t		monitor;
 	int				num_of_philo;
 	int				time_to_die;
@@ -35,11 +35,11 @@ typedef struct s_data
 	int				c_thread; //thread checker
 	int				c_stop; // stop checker
 	int				c_fork; //fork mutex checker
-	int				c_controller; //controller checker
+	int				c_print; //m_print checker
 	long long int	start_time;
 	pthread_mutex_t	m_stop; // protect stopper
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	controller;
+	pthread_mutex_t	m_print;
 	// int ready;
 } t_data;
 
@@ -99,7 +99,7 @@ void *routine(void *arg);
 // utils.c
 long long int	get_cur_time(void);
 void			skip_time(int time_input);
-void			controller_print(t_philo *philo, char *message);
+void			m_print(t_philo *philo, char *message);
 long			ft_atol(const char *nptr);
 t_error_type	error_msg(t_error_type error_no);
 

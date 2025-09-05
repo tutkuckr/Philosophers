@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:39:42 by tcakir-y          #+#    #+#             */
-/*   Updated: 2025/09/03 14:56:24 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/05 16:05:40 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*monitor(void *arg)
-{
-	t_philo *philo;
+// void	*monitor(void *arg)
+// {
+// 	t_philo *philo;
 
-	philo = (t_philo *)arg;
+// 	philo = (t_philo *)arg;
 	
 
-}
+// }

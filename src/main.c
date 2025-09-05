@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:39:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/03 14:18:46 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/05 15:35:05 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char *argv[])
 	philo = NULL;
 	if (check_error(argc, argv) != SUCCESS)
 		return (1);
-	if (init_data(&data, argc, argv) != SUCCESS) 
+	if (init_data(&data, argc, argv) != SUCCESS)
 		return (1);
 	if (init_philo(&data, &philo) != SUCCESS)
 		return (free_data(&data, philo), 1);

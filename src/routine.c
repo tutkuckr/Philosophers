@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 13:55:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/03 14:46:52 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/05 16:04:58 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static void	handle_single_philo(t_philo *philo)
 
 	first = philo->right_fork;
 	pthread_mutex_lock(&philo->data->forks[first]);
-	controller_print(philo, "has taken a fork");
+	m_print(philo, "has taken a fork");
 	pthread_mutex_unlock(&philo->data->forks[first]);
 	skip_time(philo->data->time_to_die);
-	controller_print(philo, "died");
+	m_print(philo, "died");
 	set_stopper_val(philo->data, 1);
 }
 
@@ -51,7 +51,7 @@ void *routine(void *arg)
 		usleep(200);
 	while(get_stopper_val(philo->data) != 1) // TODO: maybe change into monitor
 	{
-		controller_print(philo, "is thinking");
+		m_print(philo, "is thinking");
 		start_taking_forks(philo);
 	}
 	return (NULL);

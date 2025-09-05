@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 20:20:48 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/01 17:26:21 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/05 16:04:12 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	free_data(t_data *data, t_philo *philo)
 		data->forks = NULL;
 		data->c_fork = 0;
 	}
-	if (data->c_controller == 1)
-		pthread_mutex_destroy(&data->controller);
-	data->c_controller = 0;
+	if (data->c_print == 1)
+		pthread_mutex_destroy(&data->m_print);
+	data->c_print = 0;
 	if (data->c_stop == 1)
 		pthread_mutex_destroy(&data->m_stop);
 	data->c_stop = 0;

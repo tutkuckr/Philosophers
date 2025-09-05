@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:02:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/02 15:31:22 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/05 16:04:58 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 long long int	get_cur_time(void)
 {
-	struct timeval tv;
-	long long int current_time;
+	struct timeval	tv;
+	long long int	current_time;
 
 	if (gettimeofday(&tv, NULL) == -1)
 	{
@@ -26,7 +26,7 @@ long long int	get_cur_time(void)
 	return (current_time);
 }
 
-void skip_time(int time_input)
+void	skip_time(int time_input)
 {
 	long long int	wait_time;
 
@@ -35,14 +35,14 @@ void skip_time(int time_input)
 		usleep(100);
 }
 
-void controller_print(t_philo *philo, char *message)
+void	m_print(t_philo *philo, char *message)
 {
-	long long int cur_time;
+	long long int	cur_time;
 
-	pthread_mutex_lock(&philo->data->controller);
+	pthread_mutex_lock(&philo->data->m_print);
 	cur_time = get_cur_time();
 	printf("%lld %d %s\n", cur_time - philo->data->start_time, (philo->id + 1), message);
-	pthread_mutex_unlock(&philo->data->controller);
+	pthread_mutex_unlock(&philo->data->m_print);
 }
 
 long	ft_atol(const char *nptr)
