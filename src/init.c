@@ -6,39 +6,53 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/05 16:05:31 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/05 18:46:32 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/// TODO: create a monitoring thread and check for deaths!!!
 t_error_type	start_threads(t_data *data, t_philo *philo)
 {
-	int	i;
-	int j;
+	pthread_t	t_monitor;
+	int			i;
+	int			j;
 
-	data->c_thread = 0;
-	i = 0;
-	// if (pthread_create((&philo->data->monitor), NULL, monitor, philo) != 0) //check, monitor thread
-	// {
-	// 	return (error_msg(ERR_THREAD));
-	// }
-	while (i < data->num_of_philo)
+	i = -1;
+	while (++i < data->num_of_philo)
 	{
-		if (pthread_create((&philo[i].thread), NULL, routine, (&philo[i])) != 0)
+		if (pthread_create((&philo[i].thread), NULL, routine, &philo[i]) != 0)
 		{
 			j = -1;
-			while (++j < data->c_thread)
+			while (++j < i)
 				pthread_join(philo[i].thread, NULL);
-			data->c_thread = 0;
 			return (error_msg(ERR_THREAD));
 		}
-		i++;
 		data->c_thread++;
 	}
-	//data->ready = 1;
+	if (pthread_create(&t_monitor, NULL, monitor, data) != 0) //check, monitor thread
+	{
+		j = -1;
+		while (++j < data->num_of_philo)
+			pthread_join(philo[j].thread, NULL);
+		return (error_msg(ERR_THREAD));
+	}
+	pthread_join(t_monitor, NULL);
 	return (SUCCESS);
+}
+
+static void assign_forks(t_philo **philo)
+{
+	if ((*philo)->id % 2 == 0)
+	{
+		(*philo)->first_fork = (*philo)->right_fork;
+		(*philo)->second_fork = (*philo)->left_fork;
+	}
+	else
+	{
+		(*philo)->first_fork = (*philo)->left_fork;
+		(*philo)->second_fork = (*philo)->right_fork;
+	}
 }
 
 /// @brief mutexes: m_meal
@@ -57,14 +71,16 @@ t_error_type	init_philo(t_data *data, t_philo **philo)
 		(*philo)[i].id = i;
 		(*philo)[i].left_fork = i;
 		(*philo)[i].right_fork = (i + 1) % data->num_of_philo;
-		if(pthread_mutex_init(&(*philo)[i].m_meal, NULL) != 0)
+		assign_forks(&(*philo)[i]);
+		if (pthread_mutex_init(&(*philo)[i].m_meal, NULL) != 0)
 		{
 			j = -1;
 			while (++j < i)
 				pthread_mutex_destroy(&(*philo)[j].m_meal);
-			return (free(philo), error_msg(ERR_MUTEX));
+			return (free(*philo), error_msg(ERR_MUTEX));
 		}
 	}
+	data->philos = *philo;
 	return (SUCCESS);
 }
 
@@ -76,9 +92,9 @@ t_error_type	init_mutexes(t_data *data)
 	if (pthread_mutex_init(&data->m_print, NULL) != 0)
 		return (error_msg(ERR_MUTEX));
 	data->c_print = 1;
-	if (pthread_mutex_init(&data->m_stop, NULL) != 0)
-		return (pthread_mutex_destroy(&data->m_print), error_msg(ERR_MUTEX));
-	data->c_stop = 1;
+	// if (pthread_mutex_init(&data->m_stop, NULL) != 0)
+	// 	return (pthread_mutex_destroy(&data->m_print), error_msg(ERR_MUTEX));
+	// data->c_stop = 1;
 	while (data->c_fork < data->num_of_philo)
 	{
 		if (pthread_mutex_init(&data->forks[data->c_fork], NULL) != 0)
@@ -87,11 +103,12 @@ t_error_type	init_mutexes(t_data *data)
 			while (++j < data->c_fork)
 				pthread_mutex_destroy(&data->forks[j]);
 			pthread_mutex_destroy(&data->m_print);
-			pthread_mutex_destroy(&data->m_stop);
+			// pthread_mutex_destroy(&data->m_stop);
 			return (error_msg(ERR_MUTEX));
 		}
 		data->c_fork++;
 	}
+	printf("amount of fork mutexes: %d\n", data->c_fork);
 	return (SUCCESS);
 }
 

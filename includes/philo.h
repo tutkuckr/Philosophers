@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/05 16:05:17 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/05 16:51:25 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 typedef struct s_data
 {
-	// t_philo			*philos; //test
+	t_philo			*philos; //test
 	//pthread_t		monitor;
 	int				num_of_philo;
 	int				time_to_die;
@@ -37,11 +37,11 @@ typedef struct s_data
 	int				c_fork; //fork mutex checker
 	int				c_print; //m_print checker
 	long long int	start_time;
-	pthread_mutex_t	m_stop; // protect stopper
+	// pthread_mutex_t	m_stop; // protect stopper
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	m_print;
 	// int ready;
-} t_data;
+}	t_data;
 
 typedef struct s_philo
 {
@@ -55,7 +55,7 @@ typedef struct s_philo
 	int				second_fork; // second fork being picked up
 	int				meal_count;
 	long long int	last_meal_time;
-} t_philo;
+}	t_philo;
 
 typedef enum e_error_type
 {
@@ -90,8 +90,8 @@ void			*monitor(void *arg);
 void			handle_multi_philo(t_philo *philo);
 
 // routine_utils.c
-void			set_stopper_val(t_data *data, int val);
-int				get_stopper_val(t_data *data);
+// void			set_stopper_val(t_data *data, int val);
+// int				get_stopper_val(t_data *data);
 
 // routine.c
 void *routine(void *arg);
