@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/05 16:51:25 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/08 16:43:35 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+typedef struct s_philo	t_philo;
+typedef struct s_data	t_data;
+
 typedef struct s_data
 {
 	t_philo			*philos; //test
-	//pthread_t		monitor;
 	int				num_of_philo;
 	int				time_to_die;
 	int				time_to_eat;
@@ -37,9 +39,11 @@ typedef struct s_data
 	int				c_fork; //fork mutex checker
 	int				c_print; //m_print checker
 	long long int	start_time;
-	// pthread_mutex_t	m_stop; // protect stopper
+	int is_max_eat;
+	pthread_mutex_t	m_stop; // protect stopper
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	m_print;
+	pthread_mutex_t	m_monitor;
 	// int ready;
 }	t_data;
 
@@ -84,14 +88,12 @@ t_error_type	init_data(t_data *data, int argc, char *argv[]);
 t_error_type	init_mutexes(t_data *data);
 
 // monitor.c
-void			*monitor(void *arg);
+void			*monitor_routine(void *arg);
+void			set_stopper_val(t_data *data, int val);
+int				get_stopper_val(t_data *data);
 
 // routine_multi_philo.c
 void			handle_multi_philo(t_philo *philo);
-
-// routine_utils.c
-// void			set_stopper_val(t_data *data, int val);
-// int				get_stopper_val(t_data *data);
 
 // routine.c
 void *routine(void *arg);

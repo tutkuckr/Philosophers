@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 13:55:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/05 16:48:32 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/08 16:44:41 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,10 @@ void *routine(void *arg)
 	t_philo *philo;
 
 	philo = (t_philo *)arg;
-	// if (philo->data->ready != 1)
-	// 	usleep(200);
-	if ((philo->id % 2) == 0) //check if needed
+	if ((philo->id % 2) == 0)
 		usleep(200);
-	while(get_stopper_val(philo->data) != 1) // TODO: maybe change into monitor
-	{
-		m_print(philo, "is thinking");
-		start_taking_forks(philo);
-	}
+	m_print(philo, "is thinking");
+	start_taking_forks(philo);
+
 	return (NULL);
 }

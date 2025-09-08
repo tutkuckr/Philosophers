@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:38:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/05 17:48:52 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/08 16:47:01 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static void	eating_routine(t_philo *philo)
 
 void	handle_multi_philo(t_philo *philo)
 {
-
+	if (get_stopper_val(philo->data)) //check if correct
+		return ;
 	pthread_mutex_lock(&philo->data->forks[philo->first_fork]);
 	m_print(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->data->forks[philo->second_fork]);
@@ -39,5 +40,4 @@ void	handle_multi_philo(t_philo *philo)
 	eating_routine(philo);
 	m_print(philo, "is sleeping");
 	skip_time(philo->data->time_to_sleep);
-
 }

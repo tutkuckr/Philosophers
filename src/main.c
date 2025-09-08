@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:39:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/05 15:35:05 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/08 14:52:16 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	main(int argc, char *argv[])
 	if (init_data(&data, argc, argv) != SUCCESS)
 		return (1);
 	if (init_philo(&data, &philo) != SUCCESS)
+		return (free_data(&data, philo), 1);
+	if (data.max_eat == 0) //check later
 		return (free_data(&data, philo), 1);
 	if (start_threads(&data, philo) != SUCCESS)
 		return (free_data(&data, philo), 1);

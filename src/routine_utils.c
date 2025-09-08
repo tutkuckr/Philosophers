@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 15:08:24 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/05 16:24:51 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/08 16:43:46 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,19 @@
 
 // // tell all threads to exit
 // // (if one dies or all eats enough)
-// void	set_stopper_val(t_data *data, int val)
-// {
-// 	pthread_mutex_lock(&data->m_stop);
-// 	data->c_stop = val;
-// 	pthread_mutex_unlock(&data->m_stop);
-// }
+void	set_stopper_val(t_data *data, int val)
+{
+	pthread_mutex_lock(&data->m_stop);
+	data->c_stop = val;
+	pthread_mutex_unlock(&data->m_stop);
+}
 
-// int	get_stopper_val(t_data *data)
-// {
-// 	int stopper;
+int	get_stopper_val(t_data *data)
+{
+	int stopper;
 
-// 	pthread_mutex_lock(&data->m_stop);
-// 	/// TODO: add checker for death or all ate condition
-// 	stopper = data->c_stop;
-// 	pthread_mutex_unlock(&data->m_stop);
-// 	return (stopper);
-// }
+	pthread_mutex_lock(&data->m_stop);
+	stopper = data->c_stop;
+	pthread_mutex_unlock(&data->m_stop);
+	return (stopper);
+}
