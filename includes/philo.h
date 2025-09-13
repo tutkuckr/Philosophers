@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/08 16:43:35 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/11 18:42:52 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_data
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int				time_to_think;
 	int				max_eat;
 	int				stopper;
 	int				c_thread; //thread checker
@@ -39,8 +40,10 @@ typedef struct s_data
 	int				c_fork; //fork mutex checker
 	int				c_print; //m_print checker
 	long long int	start_time;
-	int is_max_eat;
-	pthread_mutex_t	m_stop; // protect stopper
+	int				is_max_eat;
+	int is_dead;
+	pthread_mutex_t m_stop;	   // protect stopper
+	pthread_mutex_t m_is_dead; // protects death check during routine
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_monitor;
@@ -51,13 +54,14 @@ typedef struct s_philo
 {
 	t_data			*data;
 	pthread_t		thread;
-	pthread_mutex_t m_meal; // protect last_meal_time, meal_count
+	pthread_mutex_t	m_meal; // protect last_meal_time, meal_count
 	int				id;
 	int				left_fork;	// index = id
 	int				right_fork;	// index = (id + 1) % N
 	int				first_fork; //first fork being picked up
 	int				second_fork; // second fork being picked up
 	int				meal_count;
+	int				is_done_eating;
 	long long int	last_meal_time;
 }	t_philo;
 

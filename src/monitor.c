@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:39:42 by tcakir-y          #+#    #+#             */
-/*   Updated: 2025/09/08 16:43:26 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/13 14:11:01 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ void	*monitor_routine(void *arg)
 	data = (t_data *)arg;
 	while (1)
 	{
-		if (is_done_eating(data) == 1 || is_dead(data) == 1)
+		if (is_dead(data) == 1)
+			return (NULL);
+		if (is_done_eating(data) == 1)
 		{
 			set_stopper_val(data, 1);
 			return (NULL);

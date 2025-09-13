@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/08 16:50:13 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/13 14:29:02 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_error_type	start_threads(t_data *data, t_philo *philo)
 		return (error_msg(ERR_THREAD));
 	}
 	pthread_join(t_monitor, NULL);
-	join_threads(philo, data->num_of_philo);
 	return (SUCCESS);
 }
 
@@ -92,6 +91,12 @@ t_error_type	init_philo(t_data *data, t_philo **philo)
 	return (SUCCESS);
 }
 
+//TODO move fork mutex init loop here!
+// t_error_type init_m_fork()
+// {
+
+// }
+
 /// @brief mutexes: m_print, , m_monitor, m_stop, m_fork
 t_error_type	init_mutexes(t_data *data)
 {
@@ -105,6 +110,10 @@ t_error_type	init_mutexes(t_data *data)
 	if (pthread_mutex_init(&data->m_stop, NULL) != 0)
 		return (pthread_mutex_destroy(&data->m_print),
 			pthread_mutex_destroy(&data->m_monitor),error_msg(ERR_MUTEX));
+	if (pthread_mutex_init(&data->m_is_dead, NULL) != 0)
+		return (pthread_mutex_destroy(&data->m_print),
+				pthread_mutex_destroy(&data->m_monitor),
+				pthread_mutex_destroy(&data->m_stop), error_msg(ERR_MUTEX));
 	while (data->c_fork < data->num_of_philo)
 	{
 		if (pthread_mutex_init(&data->forks[data->c_fork], NULL) != 0)
