@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/13 14:29:02 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/13 15:18:35 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_error_type	start_threads(t_data *data, t_philo *philo)
 		if (pthread_create((&philo[i].thread), NULL, routine, &philo[i]) != 0)
 		{
 			join_threads(philo, i);
+			data->c_thread = 0;
 			return (error_msg(ERR_THREAD));
 		}
 		data->c_thread++;
@@ -42,9 +43,12 @@ t_error_type	start_threads(t_data *data, t_philo *philo)
 	if (pthread_create(&t_monitor, NULL, monitor_routine, data) != 0)
 	{
 		join_threads(philo, data->num_of_philo);
+		data->c_thread = 0;
 		return (error_msg(ERR_THREAD));
 	}
 	pthread_join(t_monitor, NULL);
+	join_threads(philo, data->num_of_philo);
+	data->c_thread = 0;
 	return (SUCCESS);
 }
 
@@ -79,6 +83,9 @@ t_error_type	init_philo(t_data *data, t_philo **philo)
 		(*philo)[i].left_fork = i;
 		(*philo)[i].right_fork = (i + 1) % data->num_of_philo;
 		assign_forks(&(*philo)[i]);
+		(*philo)[i].meal_count = 0;
+		(*philo)[i].is_done_eating = 0;
+		(*philo)[i].last_meal_time = data->start_time;
 		if (pthread_mutex_init(&(*philo)[i].m_meal, NULL) != 0)
 		{
 			j = -1;

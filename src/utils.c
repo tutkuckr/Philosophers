@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:02:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/13 14:28:16 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/13 14:54:29 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,18 @@ long long int	get_cur_time(void)
 	return (current_time);
 }
 
-void	skip_time(int time_input)
+void	skip_time(t_data *data, int time_input)
 {
-	long long int	wait_time;
-
-	wait_time = get_cur_time() + time_input;
-	while (get_cur_time() < wait_time)
-		usleep(100);
-}
-
-// void	skip_time(t_data *data, int time_input)
-// {
-// 	long long	wait_time;
+	long long	wait_time;
 	
-// 	wait_time = get_cur_time();
-// 	while (get_cur_time() - wait_time < time_input)
-// 	{
-// 		if (get_stopper_val(data))
-// 			break;
-// 		usleep(500);
-// 	}
-// }
+	wait_time = get_cur_time();
+	while (get_cur_time() - wait_time < time_input)
+	{
+		if (get_stopper_val(data))
+			break ;
+		usleep(500);
+	}
+}
 
 void	m_print(t_philo *philo, char *message)
 {

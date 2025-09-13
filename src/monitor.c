@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:39:42 by tcakir-y          #+#    #+#             */
-/*   Updated: 2025/09/13 14:11:01 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/13 15:07:31 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static int is_dead(t_data *data)
 		if (cur_time - last_meal_time >= data->time_to_die)
 		{
 			m_print(&data->philos[i], "died");
+			set_stopper_val(data, 1);
 			return (1);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/11 18:42:52 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/13 14:51:59 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void *routine(void *arg);
 
 // utils.c
 long long int	get_cur_time(void);
-void			skip_time(int time_input);
+void			skip_time(t_data *data, int time_input);
 void			m_print(t_philo *philo, char *message);
 long			ft_atol(const char *nptr);
 t_error_type	error_msg(t_error_type error_no);

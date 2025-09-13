@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:38:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/13 14:08:12 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/13 14:53:09 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,18 @@ void	print_and_skip_time(t_philo *philo, char *message)
 	if (ft_strcmp(message, "is sleeping") == 0)
 	{
 		m_print(philo, "is sleeping");
-		skip_time(philo->data->time_to_sleep);
+		skip_time(philo->data, philo->data->time_to_sleep);
 	}
-	else if (ft_strcmp(message, "is thinking") == 0) // get_stopper_val(philo->data) == 0 &&
+	else if (ft_strcmp(message, "is thinking") == 0)
 	{
 		m_print(philo, "is thinking");
 		if (philo->data->num_of_philo % 2 && philo->id == philo->data->num_of_philo - 1) //check if correct
 			usleep(1000);
-		// skip_time(philo->data->time_to_think);
 	}
 	else if (ft_strcmp(message, "is eating") == 0)
 	{
 		m_print(philo, "is eating");
-		skip_time(philo->data->time_to_eat);
+		skip_time(philo->data, philo->data->time_to_eat);
 	}
 }
 
@@ -90,12 +89,6 @@ static int	is_done_eating(t_philo *philo)
 
 void	handle_multi_philo(t_philo *philo)
 {
-	// if (get_stopper_val(philo->data) == 1) //check if correct
-	// 	return ;
-	
-	// eating_routine(philo);
-	// m_print(philo, "is sleeping");
-	// skip_time(philo->data->time_to_sleep);
 	print_and_skip_time(philo, "is sleeping");
 	while (get_stopper_val(philo->data) != 1)
 	{

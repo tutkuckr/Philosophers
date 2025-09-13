@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 13:55:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/13 14:04:10 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/13 15:12:38 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 
 static void	handle_single_philo(t_philo *philo)
 {
-	int first;
+	int	first;
 
+	if (get_stopper_val(philo->data))
+		return ;
 	first = philo->right_fork;
 	pthread_mutex_lock(&philo->data->forks[first]);
 	m_print(philo, "has taken a fork");
+	skip_time(philo->data, philo->data->time_to_die);
 	pthread_mutex_unlock(&philo->data->forks[first]);
-	skip_time(philo->data->time_to_die);
-	m_print(philo, "died");
-	set_stopper_val(philo->data, 1);
 }
 
 void	start_taking_forks(t_philo *philo)
@@ -47,7 +47,8 @@ void *routine(void *arg)
 	philo = (t_philo *)arg;
 	if ((philo->id % 2) == 0)
 		usleep(200);
-	m_print(philo, "is thinking");
+	if (get_stopper_val(philo->data) != 1)
+		m_print(philo, "is thinking");
 	start_taking_forks(philo);
 
 	return (NULL);
