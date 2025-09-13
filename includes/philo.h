@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/13 14:51:59 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/13 15:31:30 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ int				get_stopper_val(t_data *data);
 
 // routine_multi_philo.c
 void			handle_multi_philo(t_philo *philo);
+
+int ft_strcmp(const char *str1, const char *str2);
 
 // routine.c
 void *routine(void *arg);
