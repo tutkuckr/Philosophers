@@ -6,12 +6,13 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:02:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/13 15:53:54 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/15 17:22:24 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// TODO check leak on exit
 long long int	get_cur_time(void)
 {
 	struct timeval	tv;
@@ -20,7 +21,7 @@ long long int	get_cur_time(void)
 	if (gettimeofday(&tv, NULL) == -1)
 	{
 		write(2, "gettimeofday error\n", 20);
-		exit(1); // TODO check leak
+		exit(1);
 	}
 	current_time = (tv.tv_sec * 1000LL) + (tv.tv_usec / 1000LL);
 	return (current_time);
@@ -29,7 +30,7 @@ long long int	get_cur_time(void)
 void	skip_time(t_data *data, int time_input)
 {
 	long long	wait_time;
-	
+
 	wait_time = get_cur_time();
 	while (get_cur_time() - wait_time < time_input)
 	{

@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:16:51 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/25 23:16:25 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/15 17:21:01 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	print_data(t_data data)
 {
-	
 	printf("Num of philo: %d\n", data.num_of_philo);
 	printf("Time to die: %d\n", data.time_to_die);
 	printf("Time to eat: %d\n", data.time_to_eat);

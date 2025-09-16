@@ -112,3 +112,17 @@ philosopher has eaten at least 7 times.
 is unacceptable.
 • Test with any values of your choice to verify all the requirements. Ensure philosophers die at
 the right time, that they don't steal forks, and so forth.
+
+Quick sanity tests (what you should expect)
+
+./philo 5 800 2147483647 200 5 → Death ~800ms (correct, due to 2 philos “eating” for ages).
+
+./philo 5 2147483647 200 200 5 → No deaths, all reach max_eat and stop.
+
+./philo 5 800 200 2147483647 5 → No deaths (long sleep doesn’t hold forks; others keep eating).
+
+./philo 1 2147483647 200 200 1 → No death (die timer huge; single philo handles max_eat=1 quickly).
+
+Any negative number (e.g., ./philo 5 -1 200 200) → Reject with error.
+
+If you harden parsing as above and keep your skip_time difference logic, you won’t have UB from min/max—just realistic starvation when params make it inevitable.

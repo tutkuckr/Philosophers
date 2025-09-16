@@ -6,12 +6,23 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 20:20:48 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/05 16:25:10 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/16 16:50:46 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "philo.h"
+
+void	join_threads(t_philo *philo, int i)
+{
+	int	j;
+
+	j = 0;
+	while (j < i)
+	{
+		pthread_join(philo[j].thread, NULL);
+		j++;
+	}
+}
 
 static void	destroy_threads(t_data *data, t_philo *philo)
 {
@@ -46,8 +57,5 @@ void	free_data(t_data *data, t_philo *philo)
 	if (data->c_print == 1)
 		pthread_mutex_destroy(&data->m_print);
 	data->c_print = 0;
-	// if (data->c_stop == 1)
-	// 	pthread_mutex_destroy(&data->m_stop);
-	// data->c_stop = 0;
 	free(philo);
 }

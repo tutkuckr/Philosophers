@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:39:42 by tcakir-y          #+#    #+#             */
-/*   Updated: 2025/09/13 15:49:50 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/15 17:19:27 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 // in monitor routine
 // if data.max_eat != -1
-// 	meal+count++; -> if meal_count == max_eat -> return 1 ->  -> increase data->max_eat
+// 	meal+count++; -> 
+// if meal_count == max_eat -> 
+//return 1 -> increase data->max_eat
 //  else return 0;
 
 // checks every philo for
@@ -42,7 +44,7 @@ static int	is_done_eating(t_data *data)
 	return (done_eating);
 }
 
-static int is_dead(t_data *data)
+static int	is_dead(t_data *data)
 {
 	int				i;
 	long long		cur_time;

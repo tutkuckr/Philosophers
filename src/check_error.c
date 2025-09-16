@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 01:55:40 by tutku             #+#    #+#             */
-/*   Updated: 2025/08/22 17:26:17 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:05:13 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_error_type	check_error(int argc, char *argv[])
 	{
 		status = check_input(argv[i], argc, i);
 		if (status != SUCCESS)
-			return (error_msg(status));
+			return (status);
 		i++;
 	}
 	return (SUCCESS);

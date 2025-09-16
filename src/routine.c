@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 13:55:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/13 15:12:38 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/16 16:45:33 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,43 @@ void	start_taking_forks(t_philo *philo)
 Even ID: take right then left
 Odd ID: take left then right
 */
-void *routine(void *arg)
+void	*routine(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
 	if ((philo->id % 2) == 0)
 		usleep(200);
 	if (get_stopper_val(philo->data) != 1)
-		m_print(philo, "is thinking");
+		print_and_skip_time(philo, "is thinking");
 	start_taking_forks(philo);
-
 	return (NULL);
+}
+
+t_error_type	start_threads(t_data *data, t_philo *philo)
+{
+	pthread_t	t_monitor;
+	int			i;
+
+	i = -1;
+	while (++i < data->num_of_philo)
+	{
+		if (pthread_create((&philo[i].thread), NULL, routine, &philo[i]) != 0)
+		{
+			join_threads(philo, i);
+			data->c_thread = 0;
+			return (error_msg(ERR_THREAD));
+		}
+		data->c_thread++;
+	}
+	if (pthread_create(&t_monitor, NULL, monitor_routine, data) != 0)
+	{
+		join_threads(philo, data->num_of_philo);
+		data->c_thread = 0;
+		return (error_msg(ERR_THREAD));
+	}
+	pthread_join(t_monitor, NULL);
+	join_threads(philo, data->num_of_philo);
+	data->c_thread = 0;
+	return (SUCCESS);
 }

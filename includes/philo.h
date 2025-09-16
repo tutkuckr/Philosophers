@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/13 15:31:30 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/16 16:56:12 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ typedef struct s_data
 	int				c_stop; // stop checker
 	int				c_fork; //fork mutex checker
 	int				c_print; //m_print checker
-	long long int	start_time;
+	long long		start_time;
 	int				is_max_eat;
-	int is_dead;
-	pthread_mutex_t m_stop;	   // protect stopper
-	pthread_mutex_t m_is_dead; // protects death check during routine
+	int				is_dead;
+	pthread_mutex_t	m_stop; // protect stopper
+	pthread_mutex_t	m_is_dead; // protects death check during routine
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_monitor;
@@ -83,11 +83,11 @@ typedef enum e_error_type
 t_error_type	check_error(int argc, char *argv[]);
 
 //free.c
+void			join_threads(t_philo *philo, int i);
 void			free_data(t_data *data, t_philo *philo);
 
 // init.c
 t_error_type	init_philo(t_data *data, t_philo **philo);
-t_error_type	start_threads(t_data *data, t_philo *philo);
 t_error_type	init_data(t_data *data, int argc, char *argv[]);
 t_error_type	init_mutexes(t_data *data);
 
@@ -99,10 +99,11 @@ int				get_stopper_val(t_data *data);
 // routine_multi_philo.c
 void			handle_multi_philo(t_philo *philo);
 
-int ft_strcmp(const char *str1, const char *str2);
+int				ft_strcmp(const char *str1, const char *str2);
 
 // routine.c
-void *routine(void *arg);
+t_error_type	start_threads(t_data *data, t_philo *philo);
+void			*routine(void *arg);
 
 // utils.c
 long long int	get_cur_time(void);
@@ -110,7 +111,7 @@ void			skip_time(t_data *data, int time_input);
 void			m_print(t_philo *philo, char *message);
 long			ft_atol(const char *nptr);
 t_error_type	error_msg(t_error_type error_no);
-
-//test.c
+void			print_and_skip_time(t_philo *philo, char *message);
+// test.c
 void			print_data(t_data data);
 #endif
