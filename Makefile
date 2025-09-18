@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tutku <tutku@student.42.fr>                +#+  +:+       +#+         #
+#    By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/06 15:42:05 by tutku             #+#    #+#              #
-#    Updated: 2025/09/16 13:30:13 by tutku            ###   ########.fr        #
+#    Updated: 2025/09/18 12:26:33 by tcakir-y         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I$(INC_DIR) -fsanitize=thread -g
+CFLAGS = -Wall -Werror -Wextra -I$(INC_DIR) -g
 
 # Directories
 INC_DIR = includes

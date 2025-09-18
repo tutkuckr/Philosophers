@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_multi_philo.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:38:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/16 13:28:58 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/18 14:41:24 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static void	eating_routine(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->forks[philo->first_fork]);
 }
 
-// print_and_skip_time(philo, "is sleeping");
 void	handle_multi_philo(t_philo *philo)
 {
 	while (get_stopper_val(philo->data) != 1)

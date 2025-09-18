@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/16 16:56:12 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/18 15:05:04 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_data
 	int				c_stop; // stop checker
 	int				c_fork; //fork mutex checker
 	int				c_print; //m_print checker
+	int				ready; //checks if all threads are created to continue
 	long long		start_time;
 	int				is_max_eat;
 	int				is_dead;
@@ -47,6 +48,7 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_monitor;
+	pthread_mutex_t	m_ready;
 	// int ready;
 }	t_data;
 

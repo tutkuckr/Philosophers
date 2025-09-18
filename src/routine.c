@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 13:55:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/16 16:45:33 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/18 15:33:08 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	while (philo->data->c_thread != philo->data->num_of_philo) //loop to wait for all threads
+		usleep(10);
+	philo->data->start_time = get_cur_time(); //added new, test later
 	if ((philo->id % 2) == 0)
 		usleep(200);
 	if (get_stopper_val(philo->data) != 1)

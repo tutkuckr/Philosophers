@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:02:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/15 17:22:24 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/18 15:33:16 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,9 @@ void	skip_time(t_data *data, int time_input)
 {
 	long long	wait_time;
 
-	wait_time = get_cur_time();
-	while (get_cur_time() - wait_time < time_input)
-	{
-		if (get_stopper_val(data))
-			break ;
-		usleep(500);
-	}
+	wait_time = get_cur_time() + time_input; //changed here
+	while (get_stopper_val(data) != 1 && get_cur_time() < wait_time)
+		usleep(100);
 }
 
 void	m_print(t_philo *philo, char *message)
