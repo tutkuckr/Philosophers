@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 13:55:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/18 15:33:08 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/23 00:11:19 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,18 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (philo->data->c_thread != philo->data->num_of_philo) //loop to wait for all threads
-		usleep(10);
-	philo->data->start_time = get_cur_time(); //added new, test later
+	// while (philo->data->c_thread != philo->data->num_of_philo) //loop to wait for all threads
+	// 	usleep(10);
+	while (get_cur_time() < philo->data->start_time)
+		usleep(50);							  // small sleep to avoid spinning
+	// philo->data->start_time = get_cur_time(); //added new, test later
 	if ((philo->id % 2) == 0)
 		usleep(200);
+	pthread_mutex_lock(&philo->m_meal);
+	philo->last_meal_time = philo->data->start_time;
+	pthread_mutex_unlock(&philo->m_meal);
 	if (get_stopper_val(philo->data) != 1)
-		print_and_skip_time(philo, "is thinking");
+		m_print(philo, "is thinking");
 	start_taking_forks(philo);
 	return (NULL);
 }
@@ -62,6 +67,7 @@ t_error_type	start_threads(t_data *data, t_philo *philo)
 	int			i;
 
 	i = -1;
+	data->start_time = get_cur_time() + 50;
 	while (++i < data->num_of_philo)
 	{
 		if (pthread_create((&philo[i].thread), NULL, routine, &philo[i]) != 0)

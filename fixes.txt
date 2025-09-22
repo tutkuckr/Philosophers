@@ -1,0 +1,16 @@
+22 sep 2025
+
+philo: add start barrier + fix first-cycle timing & thread-safety
+
+- Set data->start_time once in start_threads() (now+50ms) and make philos
+  wait until that timestamp (barrier with usleep(50)).
+- Remove worker-side writes to start_time.
+- Drop racy c_thread spin-wait in routine().
+- Align last_meal_time to the mutex under m_meal.
+- Avoid initial think delay: use m_print("is thinking") instead of
+  print_and_skip_time for the very first log.
+- Make is_done_eating() thread-safe (lock m_meal, use >= max_eat).
+
+Notes:
+- If init_philo() still initializes last_meal_time, remove it.
+- Next: consider trylock on second fork and a first-cycle split for odd N.

@@ -6,7 +6,7 @@
 /*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:39:42 by tcakir-y          #+#    #+#             */
-/*   Updated: 2025/09/15 17:19:27 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/22 18:41:05 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ static int	is_dead(t_data *data)
 		pthread_mutex_unlock(&data->philos[i].m_meal);
 		if (cur_time - last_meal_time >= data->time_to_die)
 		{
+			pthread_mutex_lock(&data->m_is_dead);
+			data->is_dead = 1;
+			pthread_mutex_unlock(&data->m_is_dead);
 			m_print(&data->philos[i], "died");
 			return (1);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_multi_philo.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:38:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/18 14:41:24 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/23 00:26:14 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ static int	is_done_eating(t_philo *philo)
 {
 	int	done;
 
-	done = philo->is_done_eating;
+	pthread_mutex_lock(&philo->m_meal);
 	if (philo->data->max_eat == -1)
-		return (done);
-	if (philo->meal_count == philo->data->max_eat)
-	{
-		pthread_mutex_lock(&philo->m_meal);
-		philo->is_done_eating = 1;
 		done = philo->is_done_eating;
-		pthread_mutex_unlock(&philo->m_meal);
+	else
+	{
+		if (philo->meal_count >= philo->data->max_eat)
+			philo->is_done_eating = 1;
+		done = philo->is_done_eating;
 	}
+	pthread_mutex_unlock(&philo->m_meal);
 	return (done);
 }
 
@@ -48,6 +48,13 @@ void	handle_multi_philo(t_philo *philo)
 {
 	while (get_stopper_val(philo->data) != 1)
 	{
+		pthread_mutex_lock(&philo->data->m_is_dead);
+		if (philo->data->is_dead == 1)
+		{
+			pthread_mutex_unlock(&philo->data->m_is_dead);
+			return ;
+		}
+		pthread_mutex_unlock(&philo->data->m_is_dead);
 		eating_routine(philo);
 		if (is_done_eating(philo) == 1)
 			return ;
