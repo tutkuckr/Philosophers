@@ -6,23 +6,28 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/23 16:38:09 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/23 20:14:02 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	assign_forks(t_philo *philo)
+static void	assign_forks(t_philo *philo, int i)
 {
+	int	left_fork;
+	int	right_fork;
+
+	left_fork = i;
+	right_fork = (i + 1) % philo->data->num_of_philo;
 	if (philo->id % 2 == 0)
 	{
-		philo->first_fork = philo->right_fork;
-		philo->second_fork = philo->left_fork;
+		philo->first_fork = right_fork;
+		philo->second_fork = left_fork;
 	}
 	else
 	{
-		philo->first_fork = philo->left_fork;
-		philo->second_fork = philo->right_fork;
+		philo->first_fork = left_fork;
+		philo->second_fork = right_fork;
 	}
 }
 
@@ -39,12 +44,9 @@ t_error_type	init_philo(t_data *data, t_philo **philo)
 	{
 		(*philo)[i].data = data;
 		(*philo)[i].id = i;
-		(*philo)[i].left_fork = i;
-		(*philo)[i].right_fork = (i + 1) % data->num_of_philo;
-		assign_forks(&(*philo)[i]);
+		assign_forks(&(*philo)[i], i);
 		(*philo)[i].meal_count = 0;
 		(*philo)[i].is_done_eating = 0;
-		(*philo)[i].last_meal_time = data->start_time;
 		if (pthread_mutex_init(&(*philo)[i].m_meal, NULL) != 0)
 		{
 			while (--i >= 0)
@@ -81,20 +83,21 @@ t_error_type	init_mutexes(t_data *data)
 {
 	if (pthread_mutex_init(&data->m_print, NULL) != 0)
 		return (error_msg(ERR_MUTEX));
-	data->c_print = 1;
 	if (pthread_mutex_init(&data->m_monitor, NULL) != 0)
-		return (pthread_mutex_destroy(&data->m_print),
-			data->c_print = 0, error_msg(ERR_MUTEX));
+		return (pthread_mutex_destroy(&data->m_print), error_msg(ERR_MUTEX));
 	if (pthread_mutex_init(&data->m_stop, NULL) != 0)
 		return (pthread_mutex_destroy(&data->m_print),
+			pthread_mutex_destroy(&data->m_monitor), error_msg(ERR_MUTEX));
+	if (pthread_mutex_init(&data->m_ready, NULL) != 0)
+		return (pthread_mutex_destroy(&data->m_print),
 			pthread_mutex_destroy(&data->m_monitor),
-			data->c_print = 0, error_msg(ERR_MUTEX));
+			pthread_mutex_destroy(&data->m_stop), error_msg(ERR_MUTEX));
 	if (init_m_fork(data) != SUCCESS)
 	{
 		return (pthread_mutex_destroy(&data->m_print),
 			pthread_mutex_destroy(&data->m_monitor),
 			pthread_mutex_destroy(&data->m_stop),
-			data->c_print = 0, error_msg(ERR_MUTEX));
+			pthread_mutex_destroy(&data->m_ready), error_msg(ERR_MUTEX));
 	}
 	return (SUCCESS);
 }
@@ -108,7 +111,6 @@ t_error_type	init_data(t_data *data, int argc, char *argv[])
 	data->time_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
-	data->start_time = get_cur_time();
 	if (data->num_of_philo <= 0 || data->num_of_philo > 200)
 		return (error_msg(ERR_PHILO_AMOUNT));
 	if (argc == 6)

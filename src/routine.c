@@ -6,14 +6,11 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 13:55:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/23 17:21:04 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/23 20:50:51 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// first -> right fork
-// second -> left fork
 
 static void	handle_single_philo(t_philo *philo)
 {
@@ -21,40 +18,62 @@ static void	handle_single_philo(t_philo *philo)
 
 	if (get_stopper_val(philo->data))
 		return ;
-	first = philo->right_fork;
+	first = 0;
 	pthread_mutex_lock(&philo->data->forks[first]);
 	m_print(philo, "has taken a fork");
 	skip_time(philo->data, philo->data->time_to_die);
 	pthread_mutex_unlock(&philo->data->forks[first]);
 }
 
-void	start_taking_forks(t_philo *philo)
+static void	eating_routine(t_philo *philo)
 {
-	if (philo->data->num_of_philo == 1)
-		handle_single_philo(philo);
-	else
-		handle_multi_philo(philo);
+	if (get_stopper_val(philo->data) == 1)
+		return ;
+	pthread_mutex_lock(&philo->data->forks[philo->first_fork]);
+	m_print(philo, "has taken a fork");
+	pthread_mutex_lock(&philo->data->forks[philo->second_fork]);
+	m_print(philo, "has taken a fork");
+	pthread_mutex_lock(&philo->m_meal);
+	philo->last_meal_time = get_cur_time();
+	philo->meal_count++;
+	pthread_mutex_unlock(&philo->m_meal);
+	print_and_skip_time(philo, "is eating");
+	pthread_mutex_unlock(&philo->data->forks[philo->second_fork]);
+	pthread_mutex_unlock(&philo->data->forks[philo->first_fork]);
+}
+
+static void	handle_multi_philo(t_philo *philo)
+{
+	while (get_stopper_val(philo->data) != 1)
+	{
+		eating_routine(philo);
+		if (get_stopper_val(philo->data) == 0)
+			print_and_skip_time(philo, "is sleeping");
+		if (get_stopper_val(philo->data) == 0)
+			print_and_skip_time(philo, "is thinking");
+	}
 }
 
 /*
 Even ID: take right then left
 Odd ID: take left then right
 */
-void	*routine(void *arg)
+static void	*routine(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	while (get_ready_val(philo->data) == 0)
+		usleep(100);
 	while (get_cur_time() < philo->data->start_time)
 		usleep(50);
 	if ((philo->id % 2) == 0)
 		usleep(200);
-	pthread_mutex_lock(&philo->m_meal);
-	philo->last_meal_time = philo->data->start_time;
-	pthread_mutex_unlock(&philo->m_meal);
-	if (get_stopper_val(philo->data) != 1)
-		m_print(philo, "is thinking");
-	start_taking_forks(philo);
+	m_print(philo, "is thinking");
+	if (philo->data->num_of_philo == 1)
+		handle_single_philo(philo);
+	else
+		handle_multi_philo(philo);
 	return (NULL);
 }
 
@@ -64,22 +83,25 @@ t_error_type	start_threads(t_data *data, t_philo *philo)
 	int			i;
 
 	i = -1;
-	data->start_time = get_cur_time() + 50;
+	data->start_time = get_cur_time() + 100;
 	while (++i < data->num_of_philo)
 	{
+		pthread_mutex_lock(&philo[i].m_meal);
+		philo[i].last_meal_time = data->start_time; //test
+		philo[i].meal_count = 0; //test
+		pthread_mutex_unlock(&philo[i].m_meal); //test
 		if (pthread_create((&philo[i].thread), NULL, routine, &philo[i]) != 0)
 		{
 			join_threads(philo, i);
-			data->c_thread = 0;
-			return (error_msg(ERR_THREAD));
+			return (data->c_thread = 0, error_msg(ERR_THREAD));
 		}
 		data->c_thread++;
 	}
+	set_ready_val(data, 1);
 	if (pthread_create(&t_monitor, NULL, monitor_routine, data) != 0)
 	{
 		join_threads(philo, data->num_of_philo);
-		data->c_thread = 0;
-		return (error_msg(ERR_THREAD));
+		return (data->c_thread = 0, error_msg(ERR_THREAD));
 	}
 	pthread_join(t_monitor, NULL);
 	join_threads(philo, data->num_of_philo);

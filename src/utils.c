@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:02:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/23 16:20:08 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/23 18:06:51 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,18 @@ long long int	get_cur_time(void)
 	return (current_time);
 }
 
-void	skip_time(t_data *data, int time_input)
+int	ft_strcmp(const char *str1, const char *str2)
 {
-	long long	wait_time;
+	int	i;
 
-	wait_time = get_cur_time() + time_input; //changed here
-	while (get_stopper_val(data) != 1 && get_cur_time() < wait_time)
-		usleep(100);
-}
-
-void	m_print(t_philo *philo, char *message)
-{
-	long long	time_passed;
-
-	if (get_stopper_val(philo->data) == 1)
+	i = 0;
+	while (str1[i] && str2[i])
 	{
-		return ;
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
+		i++;
 	}
-	pthread_mutex_lock(&philo->data->m_print);
-	time_passed = get_cur_time() - philo->data->start_time;
-	printf("%lld %d %s\n", time_passed, (philo->id + 1), message);
-	pthread_mutex_unlock(&philo->data->m_print);
+	return (str1[i] - str2[i]);
 }
 
 long	ft_atol(const char *nptr)

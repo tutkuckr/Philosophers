@@ -6,7 +6,7 @@
 #    By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/06 15:42:05 by tutku             #+#    #+#              #
-#    Updated: 2025/09/18 12:26:33 by tcakir-y         ###   ########.fr        #
+#    Updated: 2025/09/23 20:10:48 by tcakir-y         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,9 @@ SRC =	main.c\
 		free.c\
 		init.c\
 		monitor.c\
-		routine_multi_philo.c\
-		routine_utils.c\
 		routine.c\
+		utils_print.c\
+		utils_routine.c\
 		utils.c\
 		test.c
 

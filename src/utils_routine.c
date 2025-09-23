@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine_utils.c                                    :+:      :+:    :+:   */
+/*   utils_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 15:08:24 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/15 17:51:03 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/23 18:13:00 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,37 +31,19 @@ int	get_stopper_val(t_data *data)
 	return (stopper);
 }
 
-//delay for thinking odd N to prevent starvation:
-void	print_and_skip_time(t_philo *philo, char *message)
+int	get_ready_val(t_data *data)
 {
-	if (ft_strcmp(message, "is sleeping") == 0)
-	{
-		m_print(philo, "is sleeping");
-		skip_time(philo->data, philo->data->time_to_sleep);
-	}
-	else if (ft_strcmp(message, "is thinking") == 0)
-	{
-		m_print(philo, "is thinking");
-		if (philo->data->num_of_philo % 2 == 1)
-			skip_time(philo->data, philo->data->time_to_eat / 2);
-	}
-	else if (ft_strcmp(message, "is eating") == 0)
-	{
-		m_print(philo, "is eating");
-		skip_time(philo->data, philo->data->time_to_eat);
-	}
+	int	ready;
+
+	pthread_mutex_lock(&data->m_ready);
+	ready = data->ready;
+	pthread_mutex_unlock(&data->m_ready);
+	return (ready);
 }
 
-int	ft_strcmp(const char *str1, const char *str2)
+void	set_ready_val(t_data *data, int val)
 {
-	int	i;
-
-	i = 0;
-	while (str1[i] && str2[i])
-	{
-		if (str1[i] != str2[i])
-			return (str1[i] - str2[i]);
-		i++;
-	}
-	return (str1[i] - str2[i]);
+	pthread_mutex_lock(&data->m_ready);
+	data->ready = val;
+	pthread_mutex_unlock(&data->m_ready);
 }
