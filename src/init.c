@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/16 16:55:29 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/23 16:38:09 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,11 @@ t_error_type	init_mutexes(t_data *data)
 		return (pthread_mutex_destroy(&data->m_print),
 			pthread_mutex_destroy(&data->m_monitor),
 			data->c_print = 0, error_msg(ERR_MUTEX));
-	if (pthread_mutex_init(&data->m_is_dead, NULL) != 0)
-		return (pthread_mutex_destroy(&data->m_print),
-			pthread_mutex_destroy(&data->m_monitor),
-			pthread_mutex_destroy(&data->m_stop),
-			data->c_print = 0, error_msg(ERR_MUTEX));
 	if (init_m_fork(data) != SUCCESS)
 	{
 		return (pthread_mutex_destroy(&data->m_print),
 			pthread_mutex_destroy(&data->m_monitor),
 			pthread_mutex_destroy(&data->m_stop),
-			pthread_mutex_destroy(&data->m_is_dead),
 			data->c_print = 0, error_msg(ERR_MUTEX));
 	}
 	return (SUCCESS);

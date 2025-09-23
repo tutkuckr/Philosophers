@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   routine_multi_philo.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:38:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/23 00:26:14 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/23 17:35:46 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	is_done_eating(t_philo *philo)
-{
-	int	done;
+//static int	is_done_eating(t_philo *philo)
+//{
+//	int	done;
 
-	pthread_mutex_lock(&philo->m_meal);
-	if (philo->data->max_eat == -1)
-		done = philo->is_done_eating;
-	else
-	{
-		if (philo->meal_count >= philo->data->max_eat)
-			philo->is_done_eating = 1;
-		done = philo->is_done_eating;
-	}
-	pthread_mutex_unlock(&philo->m_meal);
-	return (done);
-}
+//	pthread_mutex_lock(&philo->m_meal);
+//	if (philo->data->max_eat == -1)
+//		done = philo->is_done_eating;
+//	else
+//	{
+//		if (philo->meal_count >= philo->data->max_eat)
+//			philo->is_done_eating = 1;
+//		done = philo->is_done_eating;
+//	}
+//	pthread_mutex_unlock(&philo->m_meal);
+//	return (done);
+//}
 
 static void	eating_routine(t_philo *philo)
 {
@@ -48,16 +48,7 @@ void	handle_multi_philo(t_philo *philo)
 {
 	while (get_stopper_val(philo->data) != 1)
 	{
-		pthread_mutex_lock(&philo->data->m_is_dead);
-		if (philo->data->is_dead == 1)
-		{
-			pthread_mutex_unlock(&philo->data->m_is_dead);
-			return ;
-		}
-		pthread_mutex_unlock(&philo->data->m_is_dead);
 		eating_routine(philo);
-		if (is_done_eating(philo) == 1)
-			return ;
 		if (get_stopper_val(philo->data) == 0)
 			print_and_skip_time(philo, "is sleeping");
 		if (get_stopper_val(philo->data) == 0)

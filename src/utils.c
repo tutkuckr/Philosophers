@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:02:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/18 15:33:16 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/23 16:20:08 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,13 @@ void	m_print(t_philo *philo, char *message)
 {
 	long long	time_passed;
 
-	pthread_mutex_lock(&philo->data->m_print);
-	if (philo->data->c_stop == 1)
+	if (get_stopper_val(philo->data) == 1)
 	{
-		pthread_mutex_unlock(&philo->data->m_print);
 		return ;
 	}
+	pthread_mutex_lock(&philo->data->m_print);
 	time_passed = get_cur_time() - philo->data->start_time;
 	printf("%lld %d %s\n", time_passed, (philo->id + 1), message);
-	if (ft_strcmp(message, "died") == 0)
-		set_stopper_val(philo->data, 1);
 	pthread_mutex_unlock(&philo->data->m_print);
 }
 
