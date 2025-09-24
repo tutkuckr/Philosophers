@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 13:55:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/23 20:50:51 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/24 17:12:52 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ static void	eating_routine(t_philo *philo)
 		return ;
 	pthread_mutex_lock(&philo->data->forks[philo->first_fork]);
 	m_print(philo, "has taken a fork");
+	if (get_stopper_val(philo->data) == 1)
+	{
+		pthread_mutex_unlock(&philo->data->forks[philo->first_fork]);
+		return ;
+	}
 	pthread_mutex_lock(&philo->data->forks[philo->second_fork]);
 	m_print(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->m_meal);
@@ -54,10 +59,6 @@ static void	handle_multi_philo(t_philo *philo)
 	}
 }
 
-/*
-Even ID: take right then left
-Odd ID: take left then right
-*/
 static void	*routine(void *arg)
 {
 	t_philo	*philo;
@@ -65,11 +66,12 @@ static void	*routine(void *arg)
 	philo = (t_philo *)arg;
 	while (get_ready_val(philo->data) == 0)
 		usleep(100);
-	while (get_cur_time() < philo->data->start_time)
-		usleep(50);
 	if ((philo->id % 2) == 0)
-		usleep(200);
-	m_print(philo, "is thinking");
+		usleep(1000);
+	pthread_mutex_lock(&philo->m_meal);
+	philo->last_meal_time = get_cur_time();
+	pthread_mutex_unlock(&philo->m_meal);
+	print_and_skip_time(philo, "is thinking");
 	if (philo->data->num_of_philo == 1)
 		handle_single_philo(philo);
 	else
@@ -86,10 +88,6 @@ t_error_type	start_threads(t_data *data, t_philo *philo)
 	data->start_time = get_cur_time() + 100;
 	while (++i < data->num_of_philo)
 	{
-		pthread_mutex_lock(&philo[i].m_meal);
-		philo[i].last_meal_time = data->start_time; //test
-		philo[i].meal_count = 0; //test
-		pthread_mutex_unlock(&philo[i].m_meal); //test
 		if (pthread_create((&philo[i].thread), NULL, routine, &philo[i]) != 0)
 		{
 			join_threads(philo, i);

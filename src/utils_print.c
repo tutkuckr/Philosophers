@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 18:03:31 by tcakir-y          #+#    #+#             */
-/*   Updated: 2025/09/23 20:22:53 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/24 17:40:42 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ void	print_and_skip_time(t_philo *philo, char *message)
 	else if (ft_strcmp(message, "is thinking") == 0)
 	{
 		m_print(philo, "is thinking");
-		if (philo->data->num_of_philo % 2 == 1)
-			skip_time(philo->data, philo->data->time_to_eat / 2);
+		usleep(300);
+		if (philo->data->num_of_philo % 2 == 1
+			&& philo->id == philo->data->num_of_philo - 1)
+			usleep(1000);
 	}
 	else if (ft_strcmp(message, "is eating") == 0)
 	{

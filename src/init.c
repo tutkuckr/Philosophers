@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/23 20:14:02 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/24 17:41:30 by tutku            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_error_type	init_philo(t_data *data, t_philo **philo)
 		assign_forks(&(*philo)[i], i);
 		(*philo)[i].meal_count = 0;
 		(*philo)[i].is_done_eating = 0;
+		(*philo)[i].last_meal_time = get_cur_time();
 		if (pthread_mutex_init(&(*philo)[i].m_meal, NULL) != 0)
 		{
 			while (--i >= 0)
