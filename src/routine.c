@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 13:55:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/24 17:12:52 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/25 10:58:04 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static void	*routine(void *arg)
 		usleep(1000);
 	pthread_mutex_lock(&philo->m_meal);
 	philo->last_meal_time = get_cur_time();
+	philo->data->start_time = get_cur_time();
 	pthread_mutex_unlock(&philo->m_meal);
 	print_and_skip_time(philo, "is thinking");
 	if (philo->data->num_of_philo == 1)
