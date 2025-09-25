@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/23 20:11:10 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:55:11 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_data	t_data;
 typedef struct s_data
 {
 	t_philo			*philos;
+	pthread_t		t_monitor;
 	int				num_of_philo;
 	int				time_to_die;
 	int				time_to_eat;
@@ -35,6 +36,7 @@ typedef struct s_data
 	int				time_to_think;
 	int				max_eat;
 	int				c_thread; //thread checker
+	int				c_monitor;//monitor thread checker
 	int				c_stop; //stop checker
 	int				c_fork; //fork mutex checker
 	int				ready; //checks if all threads are created to continue
@@ -78,7 +80,6 @@ typedef enum e_error_type
 t_error_type	check_error(int argc, char *argv[]);
 
 //free.c
-void			join_threads(t_philo *philo, int i);
 void			free_data(t_data *data, t_philo *philo);
 
 // init.c

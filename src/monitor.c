@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:39:42 by tcakir-y          #+#    #+#             */
-/*   Updated: 2025/09/24 16:33:42 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/25 17:59:53 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static int	is_dead(t_data *data)
 		pthread_mutex_unlock(&data->philos[i].m_meal);
 		if (cur_time - last_meal_time >= data->time_to_die)
 		{
+			set_stopper_val(data, 1); //check if it should be before or after mprint
 			m_print(&data->philos[i], "died");
 			return (1);
 		}

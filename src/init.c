@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/24 17:41:30 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/25 17:46:00 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ t_error_type	init_philo(t_data *data, t_philo **philo)
 		if (pthread_mutex_init(&(*philo)[i].m_meal, NULL) != 0)
 		{
 			while (--i >= 0)
-				pthread_mutex_destroy(&(*philo)[i].m_meal);
-			return (free(*philo), error_msg(ERR_MUTEX));
+				pthread_mutex_destroy(&(*philo)[i].m_meal);	
+			return (error_msg(ERR_MUTEX));
 		}
 	}
 	data->philos = *philo;
@@ -118,6 +118,8 @@ t_error_type	init_data(t_data *data, int argc, char *argv[])
 		data->max_eat = ft_atol(argv[5]);
 	else
 		data->max_eat = -1;
+	if (data->max_eat == 0) //check
+		return (error_msg(ERR_INV_ARGC));
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_of_philo);
 	if (!data->forks)
 		return (error_msg(ERR_MALLOC));

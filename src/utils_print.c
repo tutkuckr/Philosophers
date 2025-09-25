@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 18:03:31 by tcakir-y          #+#    #+#             */
-/*   Updated: 2025/09/24 17:40:42 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/25 17:15:57 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,7 @@ void	m_print(t_philo *philo, char *message)
 		return ;
 	}
 	time_passed = get_cur_time() - philo->data->start_time;
-	if (ft_strcmp(message, "died") == 0)
-	{
-		if (get_stopper_val(philo->data) == 0)
-			set_stopper_val(philo->data, 1);
-		printf("%lld %d %s\n", time_passed, (philo->id + 1), message);
-	}
-	else
-	{
-		printf("%lld %d %s\n", time_passed, (philo->id + 1), message);
-	}
+	printf("%lld %d %s\n", time_passed, (philo->id + 1), message);
 	pthread_mutex_unlock(&philo->data->m_print);
 }
 

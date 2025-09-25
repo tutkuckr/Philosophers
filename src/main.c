@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tutku <tutku@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:39:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/15 17:22:10 by tutku            ###   ########.fr       */
+/*   Updated: 2025/09/25 14:08:17 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ int	main(int argc, char *argv[])
 	if (init_data(&data, argc, argv) != SUCCESS)
 		return (1);
 	if (init_philo(&data, &philo) != SUCCESS)
-		return (free_data(&data, philo), 1);
-	if (data.max_eat == 0)
-		return (free_data(&data, philo), 1);
+		return (1);
 	if (start_threads(&data, philo) != SUCCESS)
 		return (free_data(&data, philo), 1);
 	free_data(&data, philo);
