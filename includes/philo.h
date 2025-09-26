@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/25 14:55:11 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/26 12:12:27 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_data
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_monitor;
 	pthread_mutex_t	m_ready;
+	pthread_mutex_t	m_thread;
 }	t_data;
 
 typedef struct s_philo
@@ -60,6 +61,7 @@ typedef struct s_philo
 	int				meal_count;
 	int				is_done_eating;
 	long long int	last_meal_time;
+	int				started;
 }	t_philo;
 
 typedef enum e_error_type

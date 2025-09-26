@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:39:42 by tcakir-y          #+#    #+#             */
-/*   Updated: 2025/09/25 17:59:53 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/26 13:12:42 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	*monitor_routine(void *arg)
 	t_data	*data;
 
 	data = (t_data *)arg;
+	while (get_ready_val(data) == 0)
+		usleep(100);
 	while (1)
 	{
 		if (is_dead(data) == 1 || is_done_eating(data) == 1)
