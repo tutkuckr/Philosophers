@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 20:20:48 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/26 13:32:47 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/26 15:01:31 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,48 +31,24 @@ static void	destroy_mutexes(t_data *data)
 	data->forks = NULL;
 }
 
-//static	void join_monitor(t_data *data)
-
 static void	join_threads(t_data *data)
 {
 	int	i;
-	int	c_monitor;
-	int	c_thread;
 
-	pthread_mutex_lock(&data->m_monitor);
-	c_monitor = data->c_monitor;
-	pthread_mutex_unlock(&data->m_monitor);
-	if (c_monitor == 1)
-	{
-		pthread_join(data->t_monitor, NULL);
-		pthread_mutex_lock(&data->m_monitor);
-		 data->c_monitor = 0;
-		pthread_mutex_unlock(&data->m_monitor);
-	}
-	pthread_mutex_lock(&data->m_thread);
-	c_thread = data->c_thread;
-	pthread_mutex_unlock(&data->m_thread);
-	if (c_thread != 0)
+	i = -1;
+	pthread_join(data->t_monitor, NULL);
+	if (data->c_thread != 0)
 	{	
-		i = -1;
-		while (++i < data->num_of_philo)
-		{
-			if (data->philos[i].started)
-			{
-				pthread_join(data->philos[i].thread, NULL);
-				data->philos[i].started = 0;
-			}
-		}
-		pthread_mutex_lock(&data->m_thread);
+		while (++i < data->c_thread)
+			pthread_join(data->philos[i].thread, NULL);
 		data->c_thread = 0;
-		pthread_mutex_unlock(&data->m_thread);
 	}
 }
 
-
 void	free_data(t_data *data, t_philo *philo)
 {
-	join_threads(data);
+	if (philo)
+		join_threads(data);
 	destroy_mutexes(data);
 	free(philo);
 	philo = NULL;

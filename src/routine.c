@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 13:55:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/26 12:41:28 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/26 14:54:02 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_error_type	start_threads(t_data *data, t_philo *philo)
 
 	i = -1;
 	data->start_time = get_cur_time() + 500;
-	while (++i < data->num_of_philo) //not sure added recently
+	while (++i < data->num_of_philo)
 		philo[i].last_meal_time = data->start_time;
 	i = -1;
 	while (++i < data->num_of_philo)
@@ -101,7 +101,6 @@ t_error_type	start_threads(t_data *data, t_philo *philo)
 	if (pthread_create(&data->t_monitor, NULL, monitor_routine, data) != 0)
 		return (error_msg(ERR_THREAD));
 	pthread_mutex_lock(&data->m_monitor);
-	data->c_monitor = 1;
 	pthread_mutex_unlock(&data->m_monitor);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/26 12:12:40 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/26 15:00:22 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_error_type	init_philo(t_data *data, t_philo **philo)
 		{
 			while (--i >= 0)
 				pthread_mutex_destroy(&(*philo)[i].m_meal);	
-			return (error_msg(ERR_MUTEX));
+			return (free(philo), philo = NULL, error_msg(ERR_MUTEX));
 		}
 	}
 	data->philos = *philo;
@@ -80,29 +80,23 @@ t_error_type	init_m_fork(t_data *data)
 	return (SUCCESS);
 }
 
-/// @brief mutexes: m_print, m_thread, m_monitor, m_stop, m_fork
+/// @brief mutexes: m_print, , m_monitor, m_stop, m_fork
 t_error_type	init_mutexes(t_data *data)
 {
 	if (pthread_mutex_init(&data->m_print, NULL) != 0)
 		return (error_msg(ERR_MUTEX));
-	if (pthread_mutex_init(&data->m_thread, NULL) != 0)
-		return (pthread_mutex_destroy(&data->m_print), error_msg(ERR_MUTEX));
 	if (pthread_mutex_init(&data->m_monitor, NULL) != 0)
-		return (pthread_mutex_destroy(&data->m_print),
-			pthread_mutex_destroy(&data->m_thread), error_msg(ERR_MUTEX));
+		return (pthread_mutex_destroy(&data->m_print), error_msg(ERR_MUTEX));
 	if (pthread_mutex_init(&data->m_stop, NULL) != 0)
 		return (pthread_mutex_destroy(&data->m_print),
-			pthread_mutex_destroy(&data->m_thread), 
 			pthread_mutex_destroy(&data->m_monitor), error_msg(ERR_MUTEX));
 	if (pthread_mutex_init(&data->m_ready, NULL) != 0)
 		return (pthread_mutex_destroy(&data->m_print),
-			pthread_mutex_destroy(&data->m_thread), 
 			pthread_mutex_destroy(&data->m_monitor),
 			pthread_mutex_destroy(&data->m_stop), error_msg(ERR_MUTEX));
 	if (init_m_fork(data) != SUCCESS)
 	{
 		return (pthread_mutex_destroy(&data->m_print),
-			pthread_mutex_destroy(&data->m_thread), 
 			pthread_mutex_destroy(&data->m_monitor),
 			pthread_mutex_destroy(&data->m_stop),
 			pthread_mutex_destroy(&data->m_ready), error_msg(ERR_MUTEX));

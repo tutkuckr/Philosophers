@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/26 12:12:27 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/26 14:51:54 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_data
 	int				time_to_think;
 	int				max_eat;
 	int				c_thread; //thread checker
-	int				c_monitor;//monitor thread checker
 	int				c_stop; //stop checker
 	int				c_fork; //fork mutex checker
 	int				ready; //checks if all threads are created to continue

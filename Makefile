@@ -6,12 +6,12 @@
 #    By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/06 15:42:05 by tutku             #+#    #+#              #
-#    Updated: 2025/09/26 10:58:36 by tcakir-y         ###   ########.fr        #
+#    Updated: 2025/09/26 14:52:27 by tcakir-y         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I$(INC_DIR) -g
+CFLAGS = -Wall -Werror -Wextra -I$(INC_DIR) -pthread -g
 
 # Directories
 INC_DIR = includes
