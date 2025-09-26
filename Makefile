@@ -6,7 +6,7 @@
 #    By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/06 15:42:05 by tutku             #+#    #+#              #
-#    Updated: 2025/09/25 18:00:29 by tcakir-y         ###   ########.fr        #
+#    Updated: 2025/09/26 10:58:36 by tcakir-y         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,23 +42,23 @@ all: $(NAME)
 # Rule to compile .c files into .o files in obj/
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/philo.h
 					@mkdir -p $(OBJ_DIR)
-					@echo "\033[0;33mCompiling $<.."]
+					@echo "\033[0;33mCompiling $<.."
 					@$(CC) $(CFLAGS) -c $< -o $@
 
 # Rule to link executable
 $(NAME):$(OBJ)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
-	@echo "\033[0;32mAll files compiled!"]
+	@echo "\033[0;32mAll files compiled!"
 
 # Clean rule: removes object files
 clean:
 	@rm -rf $(OBJ_DIR)
-	@echo "\033[0;31mAll object files removed."]
+	@echo "\033[0;31mAll object files removed."
 
 # Full clean rule: removes executables
 fclean: clean
 	@rm -f $(NAME)
-	@echo "\033[0;31mAll executable files removed."]
+	@echo "\033[0;31mAll executable files removed."
 
 # Recompile everything
 re: fclean all
