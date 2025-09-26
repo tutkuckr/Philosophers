@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 13:55:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/25 17:59:27 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/26 11:17:35 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void	handle_single_philo(t_philo *philo)
 	first = 0;
 	pthread_mutex_lock(&philo->data->forks[first]);
 	m_print(philo, "has taken a fork");
-	pthread_mutex_unlock(&philo->data->forks[first]);
 	skip_time(philo->data, philo->data->time_to_die);
+	pthread_mutex_unlock(&philo->data->forks[first]);
 }
 
 static void	eating_routine(t_philo *philo)
@@ -66,8 +66,8 @@ static void	*routine(void *arg)
 		usleep(100);
 	if ((philo->id % 2) == 0)
 		usleep(1000);
-	//while (get_cur_time() < philo->data->start_time) //not sure try commenting out?
-	//	usleep(50);
+	while (get_cur_time() < philo->data->start_time)
+		usleep(50);
 	pthread_mutex_lock(&philo->m_meal);
 	philo->last_meal_time = get_cur_time();
 	//philo->data->start_time = get_cur_time(); //check if correct
