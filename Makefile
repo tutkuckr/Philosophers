@@ -6,7 +6,7 @@
 #    By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/06 15:42:05 by tutku             #+#    #+#              #
-#    Updated: 2025/09/26 14:52:27 by tcakir-y         ###   ########.fr        #
+#    Updated: 2025/09/26 17:44:57 by tcakir-y         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,13 +22,13 @@ OBJ_DIR = obj
 SRC =	main.c\
 		check_error.c\
 		free.c\
+		init_mutexes.c\
 		init.c\
 		monitor.c\
 		routine.c\
 		utils_print.c\
 		utils_routine.c\
-		utils.c\
-		test.c
+		utils.c
 
 # Convert source file name into object file path inside obj/
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

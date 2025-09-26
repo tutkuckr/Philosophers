@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 18:03:31 by tcakir-y          #+#    #+#             */
-/*   Updated: 2025/09/25 17:15:57 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/26 17:43:33 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	m_print(t_philo *philo, char *message)
 		return ;
 	}
 	time_passed = get_cur_time() - philo->data->start_time;
+	if (time_passed < 0)
+		time_passed = 0;
 	printf("%lld %d %s\n", time_passed, (philo->id + 1), message);
 	pthread_mutex_unlock(&philo->data->m_print);
 }
@@ -31,7 +33,7 @@ void	skip_time(t_data *data, int time_input)
 {
 	long long	wait_time;
 
-	wait_time = get_cur_time() + time_input; //changed here
+	wait_time = get_cur_time() + time_input;
 	while (get_stopper_val(data) != 1 && get_cur_time() < wait_time)
 		usleep(100);
 }

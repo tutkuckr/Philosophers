@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:18:20 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/26 15:00:22 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/26 17:48:05 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_error_type	init_philo(t_data *data, t_philo **philo)
 	*philo = malloc(sizeof(t_philo) * data->num_of_philo);
 	if (!*philo)
 		return (error_msg(ERR_MALLOC));
+	data->philos = *philo;
 	i = -1;
 	while (++i < data->num_of_philo)
 	{
@@ -48,59 +49,15 @@ t_error_type	init_philo(t_data *data, t_philo **philo)
 		(*philo)[i].meal_count = 0;
 		(*philo)[i].is_done_eating = 0;
 		(*philo)[i].last_meal_time = get_cur_time();
-		(*philo)[i].started = 0;
 		if (pthread_mutex_init(&(*philo)[i].m_meal, NULL) != 0)
 		{
 			while (--i >= 0)
-				pthread_mutex_destroy(&(*philo)[i].m_meal);	
-			return (free(philo), philo = NULL, error_msg(ERR_MUTEX));
+				pthread_mutex_destroy(&(*philo)[i].m_meal);
+			return (free(*philo), *philo = NULL,
+				data->philos = NULL, error_msg(ERR_MUTEX));
 		}
 	}
-	data->philos = *philo;
-	return (SUCCESS);
-}
-
-t_error_type	init_m_fork(t_data *data)
-{
-	int	j;
-
-	j = 0;
-	while (j < data->num_of_philo)
-	{
-		if (pthread_mutex_init(&data->forks[j], NULL) != 0)
-		{
-			while (--j >= 0)
-				pthread_mutex_destroy(&data->forks[j]);
-			data->c_fork = 0;
-			return (error_msg(ERR_MUTEX));
-		}
-		j++;
-	}
-	data->c_fork = data->num_of_philo;
-	return (SUCCESS);
-}
-
-/// @brief mutexes: m_print, , m_monitor, m_stop, m_fork
-t_error_type	init_mutexes(t_data *data)
-{
-	if (pthread_mutex_init(&data->m_print, NULL) != 0)
-		return (error_msg(ERR_MUTEX));
-	if (pthread_mutex_init(&data->m_monitor, NULL) != 0)
-		return (pthread_mutex_destroy(&data->m_print), error_msg(ERR_MUTEX));
-	if (pthread_mutex_init(&data->m_stop, NULL) != 0)
-		return (pthread_mutex_destroy(&data->m_print),
-			pthread_mutex_destroy(&data->m_monitor), error_msg(ERR_MUTEX));
-	if (pthread_mutex_init(&data->m_ready, NULL) != 0)
-		return (pthread_mutex_destroy(&data->m_print),
-			pthread_mutex_destroy(&data->m_monitor),
-			pthread_mutex_destroy(&data->m_stop), error_msg(ERR_MUTEX));
-	if (init_m_fork(data) != SUCCESS)
-	{
-		return (pthread_mutex_destroy(&data->m_print),
-			pthread_mutex_destroy(&data->m_monitor),
-			pthread_mutex_destroy(&data->m_stop),
-			pthread_mutex_destroy(&data->m_ready), error_msg(ERR_MUTEX));
-	}
+	data->control.meal = 1;
 	return (SUCCESS);
 }
 
@@ -119,13 +76,15 @@ t_error_type	init_data(t_data *data, int argc, char *argv[])
 		data->max_eat = ft_atol(argv[5]);
 	else
 		data->max_eat = -1;
-	if (data->max_eat == 0) //check
+	if (data->max_eat == 0)
 		return (error_msg(ERR_INV_ARGC));
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_of_philo);
 	if (!data->forks)
 		return (error_msg(ERR_MALLOC));
 	status = init_mutexes(data);
 	if (status != SUCCESS)
-		return (free(data->forks), status);
+		return (destroy_mutexes(data), free(data->forks),
+			data->forks = NULL, status);
+	data->control.mutexes = 1;
 	return (SUCCESS);
 }

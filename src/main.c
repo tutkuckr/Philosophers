@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:39:50 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/26 14:58:13 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/26 15:13:39 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (init_data(&data, argc, argv) != SUCCESS)
 		return (1);
-	if (init_philo(&data, &philo) != SUCCESS) //free philo stuff -> free(philo); -> philo = NULL;
+	if (init_philo(&data, &philo) != SUCCESS)
 		return (free_data(&data, philo), 1);
 	if (start_threads(&data, philo) != SUCCESS)
 		return (free_data(&data, philo), 1);

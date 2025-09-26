@@ -6,18 +6,11 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:39:42 by tcakir-y          #+#    #+#             */
-/*   Updated: 2025/09/26 13:12:42 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/26 17:31:11 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// in monitor routine
-// if data.max_eat != -1
-// 	meal+count++; -> 
-// if meal_count == max_eat -> 
-//return 1 -> increase data->max_eat
-//  else return 0;
 
 // checks every philo for
 // is dead, or is all ate
@@ -51,15 +44,15 @@ static int	is_dead(t_data *data)
 	long long		last_meal_time;
 
 	i = -1;
-	cur_time = get_cur_time();
 	while (++i < data->num_of_philo)
 	{
+		cur_time = get_cur_time();
 		pthread_mutex_lock(&data->philos[i].m_meal);
 		last_meal_time = data->philos[i].last_meal_time;
 		pthread_mutex_unlock(&data->philos[i].m_meal);
 		if (cur_time - last_meal_time >= data->time_to_die)
 		{
-			set_stopper_val(data, 1); //check if it should be before or after mprint
+			set_stopper_val(data, 1);
 			m_print(&data->philos[i], "died");
 			return (1);
 		}
@@ -75,6 +68,8 @@ void	*monitor_routine(void *arg)
 	data = (t_data *)arg;
 	while (get_ready_val(data) == 0)
 		usleep(100);
+	while (get_cur_time() < data->start_time)
+		usleep(50);
 	while (1)
 	{
 		if (is_dead(data) == 1 || is_done_eating(data) == 1)

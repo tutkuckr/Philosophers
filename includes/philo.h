@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/26 14:51:54 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/26 17:47:21 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@
 typedef struct s_philo	t_philo;
 typedef struct s_data	t_data;
 
+typedef struct s_m_control
+{
+	int	print;
+	int	monitor;
+	int	stop;
+	int	ready;
+	int	fork;
+	//int	thread;
+	int	meal;
+	int	mutexes;
+}	t_m_control;
+
 typedef struct s_data
 {
 	t_philo			*philos;
@@ -37,7 +49,7 @@ typedef struct s_data
 	int				max_eat;
 	int				c_thread; //thread checker
 	int				c_stop; //stop checker
-	int				c_fork; //fork mutex checker
+	int				c_monitor;
 	int				ready; //checks if all threads are created to continue
 	long long		start_time;
 	int				is_max_eat;
@@ -46,7 +58,7 @@ typedef struct s_data
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_monitor;
 	pthread_mutex_t	m_ready;
-	pthread_mutex_t	m_thread;
+	t_m_control		control;
 }	t_data;
 
 typedef struct s_philo
@@ -60,7 +72,6 @@ typedef struct s_philo
 	int				meal_count;
 	int				is_done_eating;
 	long long int	last_meal_time;
-	int				started;
 }	t_philo;
 
 typedef enum e_error_type
@@ -81,6 +92,7 @@ typedef enum e_error_type
 t_error_type	check_error(int argc, char *argv[]);
 
 //free.c
+void			destroy_mutexes(t_data *data);
 void			free_data(t_data *data, t_philo *philo);
 
 // init.c
