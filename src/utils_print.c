@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 18:03:31 by tcakir-y          #+#    #+#             */
-/*   Updated: 2025/09/26 17:43:33 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/26 17:55:51 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	skip_time(t_data *data, int time_input)
 		usleep(100);
 }
 
-//delay for thinking odd N to prevent starvation:
+//delay for thinking odd id philo to prevent starvation
 void	print_and_skip_time(t_philo *philo, char *message)
 {
 	if (ft_strcmp(message, "is sleeping") == 0)

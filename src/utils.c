@@ -6,13 +6,12 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 23:02:10 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/23 18:06:51 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/26 17:54:27 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// TODO check leak on exit
 long long int	get_cur_time(void)
 {
 	struct timeval	tv;
@@ -66,7 +65,6 @@ long	ft_atol(const char *nptr)
 	return (result * sign);
 }
 
-// later define messages with const str, and use one printf
 t_error_type	error_msg(t_error_type error_no)
 {
 	const char	*e_msg[] = {

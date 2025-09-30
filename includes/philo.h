@@ -6,7 +6,7 @@
 /*   By: tcakir-y <tcakir-y@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 15:40:14 by tutku             #+#    #+#             */
-/*   Updated: 2025/09/26 17:47:21 by tcakir-y         ###   ########.fr       */
+/*   Updated: 2025/09/30 11:00:11 by tcakir-y         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ void			free_data(t_data *data, t_philo *philo);
 
 // init.c
 t_error_type	init_philo(t_data *data, t_philo **philo);
-t_error_type	init_data(t_data *data, int argc, char *argv[]);
 t_error_type	init_mutexes(t_data *data);
+t_error_type	init_data(t_data *data, int argc, char *argv[]);
 
 // monitor.c
 void			*monitor_routine(void *arg);
@@ -111,18 +111,16 @@ void			m_print(t_philo *philo, char *message);
 void			skip_time(t_data *data, int time_input);
 void			print_and_skip_time(t_philo *philo, char *message);
 
+//utils_routine.c
+void			set_stopper_val(t_data *data, int val);
+int				get_stopper_val(t_data *data);
+int				get_ready_val(t_data *data);
+void			set_ready_val(t_data *data, int val);
+
 // utils.c
 long long int	get_cur_time(void);
 int				ft_strcmp(const char *str1, const char *str2);
 long			ft_atol(const char *nptr);
 t_error_type	error_msg(t_error_type error_no);
 
-//utils_routine.c
-void			set_stopper_val(t_data *data, int val);
-int				get_stopper_val(t_data *data);
-void			set_ready_val(t_data *data, int val);
-int				get_ready_val(t_data *data);
-
-// test.c
-void			print_data(t_data data);
 #endif
